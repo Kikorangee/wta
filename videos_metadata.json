@@ -1,0 +1,303 @@
+{
+  "portal_title": "Webfleet Training Portal",
+  "portal_subtitle": "Search, filter, and jump between learning paths from one place.",
+  "intro_title": "Find the right training faster",
+  "intro_text": "Use the search bar to look for a topic, then narrow the view by category. Start with the recommended learning path if you are onboarding new users.",
+  "start_here_title": "Recommended learning path for new users",
+  "start_here_text": "Start with the essentials, then move into reporting, tracking, and workflow tools once the basics are in place.",
+  "categories": [
+    "Initial Setup",
+    "Tracking & Fleet",
+    "Orders & Workflow",
+    "Reporting"
+  ],
+  "videos": [
+    {
+      "id": "1VmBiZ1jnPqRQmdrng14zJxwIUFOMwSkO",
+      "title": "Activating BOSCH secure truck parking",
+      "category": "Initial Setup",
+      "description": "Training for initial setup tasks in Webfleet.",
+      "featured": false
+    },
+    {
+      "id": "1SyAIa8UNty7pE5vE0g3t1dc37s9105oF",
+      "title": "Adding Users",
+      "category": "Initial Setup",
+      "description": "Set up access, users, and admin controls for your team.",
+      "featured": true
+    },
+    {
+      "id": "1aKBL-1oM8eJbvcd5vs6yoq_3k6MK5lgH",
+      "title": "Advanced Reporting",
+      "category": "Reporting",
+      "description": "Learn how to surface the right data, KPIs, and management insights.",
+      "featured": false
+    },
+    {
+      "id": "1KATFPHwH5bXO4ZIhPV0HDChA5i0HQoRx",
+      "title": "Asset Tracking",
+      "category": "Tracking & Fleet",
+      "description": "Monitor vehicles, drivers, and fleet performance more effectively.",
+      "featured": false
+    },
+    {
+      "id": "1z6Miw6WRbGA9gTAZVukPmckJVMb0-6J0",
+      "title": "CO2 Emmissions Reporting",
+      "category": "Reporting",
+      "description": "Learn how to surface the right data, KPIs, and management insights.",
+      "featured": false
+    },
+    {
+      "id": "1eY4e4i9h6zxKEqFBdCXniJoa99CqgSNr",
+      "title": "Configuring Work App",
+      "category": "Initial Setup",
+      "description": "Configure devices, apps, and system settings for day-to-day use.",
+      "featured": false
+    },
+    {
+      "id": "14pifY_EHOed-ZG9Co8JebgsMdjfpzGcZ",
+      "title": "Creating Areas",
+      "category": "Initial Setup",
+      "description": "Training for initial setup tasks in Webfleet.",
+      "featured": false
+    },
+    {
+      "id": "1wCujmN-QfwqlMEEjzKjXU1OKOrc0KNIF",
+      "title": "Creating Reports",
+      "category": "Reporting",
+      "description": "Learn how to surface the right data, KPIs, and management insights.",
+      "featured": true
+    },
+    {
+      "id": "14NkhCf-uEI4TQD2KBYXeuDAusi9qdQjx",
+      "title": "Device Configuration",
+      "category": "Initial Setup",
+      "description": "Configure devices, apps, and system settings for day-to-day use.",
+      "featured": false
+    },
+    {
+      "id": "1CCWwRh0bAO9XjNh9LirM9BQD34sMhxv3",
+      "title": "Driver Terminal Configuration",
+      "category": "Initial Setup",
+      "description": "Configure devices, apps, and system settings for day-to-day use.",
+      "featured": false
+    },
+    {
+      "id": "1Y2i_TuriofKnRS93879uxoWbgiONvxZs",
+      "title": "EV Management",
+      "category": "Tracking & Fleet",
+      "description": "Training for tracking & fleet tasks in Webfleet.",
+      "featured": false
+    },
+    {
+      "id": "1I5HgwKP1vAM8F9kGqCxw9Cg7oLecBpEX",
+      "title": "Fleet Optimisation",
+      "category": "Tracking & Fleet",
+      "description": "Monitor vehicles, drivers, and fleet performance more effectively.",
+      "featured": false
+    },
+    {
+      "id": "1zngL1q4peNsQ8ZCaKyjRzD-PJNISmhMf",
+      "title": "Green & Safe driving",
+      "category": "Tracking & Fleet",
+      "description": "Training for tracking & fleet tasks in Webfleet.",
+      "featured": false
+    },
+    {
+      "id": "1kz4572khNHUYYW4sSwdK6J1oFvPtKuaU",
+      "title": "Optidrive 360",
+      "category": "Tracking & Fleet",
+      "description": "Monitor vehicles, drivers, and fleet performance more effectively.",
+      "featured": false
+    },
+    {
+      "id": "12QToBAyT1yIHts049vCw8iNkZ4WnGYeX",
+      "title": "Otidrive 360 Driver Ter5minal",
+      "category": "Tracking & Fleet",
+      "description": "Training for tracking & fleet tasks in Webfleet.",
+      "featured": false
+    },
+    {
+      "id": "14UOY4Q8shxUKK6Ig9gLDzEL5oF-yA5eR",
+      "title": "python",
+      "category": "Initial Setup",
+      "description": "Training for initial setup tasks in Webfleet.",
+      "featured": false
+    },
+    {
+      "id": "1yCZiGDarBI-dm8W4b0Y6tEH2Ys7-UqXg",
+      "title": "Secure Truck Parking Booking",
+      "category": "Initial Setup",
+      "description": "Training for initial setup tasks in Webfleet.",
+      "featured": false
+    },
+    {
+      "id": "1U0EF76BgXjDw-k1ppAblDcZ3Hl-C4DMg",
+      "title": "Secure Truck Parking",
+      "category": "Initial Setup",
+      "description": "Training for initial setup tasks in Webfleet.",
+      "featured": false
+    },
+    {
+      "id": "1h8v1HdtiWZc2-pdcuKsjy1ELY6u6i0TF",
+      "title": "Self-Service Administration",
+      "category": "Initial Setup",
+      "description": "Set up access, users, and admin controls for your team.",
+      "featured": false
+    },
+    {
+      "id": "1wHPeeu9iMuMKJbq-xwdwrkepg9OJhPbV",
+      "title": "Service Module Advanced",
+      "category": "Tracking & Fleet",
+      "description": "Training for tracking & fleet tasks in Webfleet.",
+      "featured": false
+    },
+    {
+      "id": "1nlmRxsB-fr_WMgrN3CHjGzwZzGp9CVYF",
+      "title": "Service Module Introduction",
+      "category": "Tracking & Fleet",
+      "description": "Training for tracking & fleet tasks in Webfleet.",
+      "featured": false
+    },
+    {
+      "id": "1JvaiJgqxQG6BQsl1NdC92a41Mra4UJH8",
+      "title": "Speed Configuration",
+      "category": "Initial Setup",
+      "description": "Configure devices, apps, and system settings for day-to-day use.",
+      "featured": false
+    },
+    {
+      "id": "1QgzNeD4N9vCUxxqP6oWJhaHQkZOYVAnQ",
+      "title": "The Dashboard",
+      "category": "Reporting",
+      "description": "Learn how to surface the right data, KPIs, and management insights.",
+      "featured": true
+    },
+    {
+      "id": "1iNpGOAegyy_-cYKFPc9L74jtEN9Atq_W",
+      "title": "Vehicle Tracking",
+      "category": "Tracking & Fleet",
+      "description": "Monitor vehicles, drivers, and fleet performance more effectively.",
+      "featured": true
+    },
+    {
+      "id": "17m8WjI6O1eMb_c7vW3zod-_d4TkhXehw",
+      "title": "Webfleet Overview",
+      "category": "Tracking & Fleet",
+      "description": "A high-level introduction to the platform and how the main modules fit together.",
+      "featured": true
+    },
+    {
+      "id": "1UVUw7FQcjgZ-gFD8aoW90wgm4vjwgUzW",
+      "title": "Webfleet Reports",
+      "category": "Reporting",
+      "description": "Learn how to surface the right data, KPIs, and management insights.",
+      "featured": false
+    },
+    {
+      "id": "1GyzEpnk-VVWMa6kK-2xv7YWhao-zsctT",
+      "title": "Workflow Management - Basic Orders",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": true
+    },
+    {
+      "id": "1HqwLeFs38gz3oQQF1I1oVQN5Hk5Jjs-w",
+      "title": "Workflow Management - Creating Order Schedules",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "18mswCoeA3vfYqKnOTJcTte6sPK8VmRNy",
+      "title": "Workflow Management - ePOD",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "1-zgxb1ZDBZ-A3-USaZPw5rxNlepDweQC",
+      "title": "Workflow Management - Fleet Scheduler",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "1jvIxgIlakeLKlZEA8Zkid2t64ys2_ECf",
+      "title": "Workflow Management - Importing Orders",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "1vnt7Og0Zr2GJTrCNDsWsLSPD8gkUC9Uj",
+      "title": "Workflow Management - Introduction to Orders",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "1GbMw6MG4-4OD3Fa0H9zrsVrB0rF1uPJU",
+      "title": "Workflow Management - Order Features",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "144Z5UqojfcvFEfM8w6wb_Jp1TvXunRi9",
+      "title": "Workflow Management - Order NotifIfication",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "1sml62O4EcJOeskOnx3M9GCYlp0f32Wvd",
+      "title": "Workflow Management - Orders View",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "1bcViaAqebiNEEAF_ahYzcedREI6Fn4Iq",
+      "title": "Workflow Management - Quick Tour",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "1fD7h3Q8uZMHeaiMFcHvUoqrixE_z0iLA",
+      "title": "Workflow Management - Schedule Review & Optimisation",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "1W4VkKZEc3ebtxhrX3Vn2xzg6V2pNLGg1",
+      "title": "Workflow Management - Starting Orders",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "1EMzoegttkD_Qx8WcCTCvQygPSbNjwoEr",
+      "title": "Workflow Management - Using Fleet Sche",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "1uzzQmXiTMUpNqaZ03DXShF2erOTnbvgA",
+      "title": "Workflow Management - Using Fleet Scheduler",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    },
+    {
+      "id": "1rNl3zOeYl5SCPQlN1SM2D30EDCwnHs_G",
+      "title": "Workflow Management - Workflow settings",
+      "category": "Orders & Workflow",
+      "description": "Manage orders, schedules, and operational workflow from planning through execution.",
+      "featured": false
+    }
+  ]
+}
