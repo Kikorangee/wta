@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Training Hub — Complete Library</title>
+<style>
+:root { --bg:#0b1220; --panel:rgba(14,23,42,0.95); --line:rgba(148,163,184,0.2); --text:#e2e8f0; --muted:#cbd5e1; --accent:#38bdf8; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:Arial,sans-serif; background:radial-gradient(circle at 10% 0%, #1d4ed8 0%, #0b1220 35%); color:var(--text); display:flex; }
+.sidebar { width:260px; background:var(--panel); border-right:1px solid var(--line); padding:28px; height:100vh; position:fixed; overflow-y:auto; }
+.sidebar h2 { margin:0 0 8px; font-size:22px; }
+.sidebar p { margin:0 0 16px; color:var(--muted); line-height:1.5; }
+.sidebar a { display:flex; justify-content:space-between; align-items:center; margin:10px 0; color:#fff; text-decoration:none; font-size:14px; }
+.sidebar a:hover { text-decoration:underline; }
+.sidebar span { color:#93c5fd; font-size:12px; }
+.sidebar-subhead { margin:18px 0 10px; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#7dd3fc; }
+.links { margin-top:14px; padding-top:10px; border-top:1px solid var(--line); }
+
+.main { margin-left:280px; width:calc(100% - 280px); padding:32px; }
+.header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px; }
+.eyebrow { margin:0; color:#7dd3fc; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; }
+h1 { margin:0; font-size:32px; line-height:1.1; }
+.intro { margin:0 0 18px; color:var(--muted); max-width:840px; line-height:1.55; }
+.section { margin:22px 0 28px; }
+.section-head { display:flex; align-items:end; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.section-head h2 { margin:0; font-size:22px; }
+.section-head p { margin:0; color:var(--muted); }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; }
+.card { background:linear-gradient(180deg, rgba(18,31,55,0.98), rgba(10,19,33,0.98)); border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.25); }
+.card.is-playable { cursor:pointer; }
+.card.is-playable:hover { outline:2px solid rgba(56,189,248,0.35); }
+
+.poster { position:relative; width:100%; aspect-ratio:16/9; background-size: cover; background-position: center; }
+
+/* Hide all text overlays */
+.badge { display: none; }
+.poster-title { display: none; }
+.desc { display: none; }
+
+.poster-logo { position:absolute; left:16px; bottom:16px; width:130px; max-height:64px; object-fit:contain; opacity:0.95; }
+
+.card-body { padding:14px 14px 16px; }
+.actions { margin:0; display:flex; gap:10px; align-items:center; }
+.action { display:inline-block; color:#fff; font-weight:700; text-decoration:none; padding:8px 10px; border-radius:10px; border:1px solid rgba(148,163,184,0.25); background:rgba(15,23,42,0.55); }
+.action:hover { text-decoration:underline; }
+
+.modal { position:fixed; inset:0; display:none; z-index:9999; }
+.modal.is-open { display:block; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.7); }
+.modal-dialog { position:relative; width:min(1000px, 92vw); margin:6vh auto; background:#0b1220; border:1px solid rgba(148,163,184,0.25); border-radius:14px; overflow:hidden; }
+.modal-close { position:absolute; top:10px; right:10px; width:40px; height:40px; border-radius:10px; background:rgba(15,23,42,0.85); color:#fff; font-size:22px; cursor:pointer; z-index:2; }
+.modal-frame { aspect-ratio:16/9; width:100%; background:#000; }
+.modal-frame iframe { width:100%; height:100%; display:block; }
+</style>
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>Training Hub</h2>
+    <p>Complete Vimeo video library</p>
+    <div class="links">
+      <h3 class="sidebar-subhead">Helpful links</h3>
+      <a href="#">Documentation</a>
+      <a href="#">Support</a>
+    </div>
+    <h3 class="sidebar-subhead">Categories</h3>
+    <a href="#all">All Videos <span>66</span></a>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <h1>Training Library</h1>
+    </div>
+    <p class="intro">Click any card to play video</p>
+
+    <section class="section" id="all">
+      <div class="section-head">
+        <h2>All Videos</h2>
+        <p>66 videos</p>
+      </div>
+      <div class="grid">
+
+        <!-- Video 1: 1173730849 -->
+        <article class="card is-playable" data-vimeo-id="1173730849">
+          <div class="poster" style="background-image: url('thumbnails/1173730849.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 2: 1173730833 -->
+        <article class="card is-playable" data-vimeo-id="1173730833">
+          <div class="poster" style="background-image: url('thumbnails/1173730833.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 3: 1173730808 -->
+        <article class="card is-playable" data-vimeo-id="1173730808">
+          <div class="poster" style="background-image: url('thumbnails/1173730808.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 4: 1173730795 -->
+        <article class="card is-playable" data-vimeo-id="1173730795">
+          <div class="poster" style="background-image: url('thumbnails/1173730795.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 5: 1173730759 -->
+        <article class="card is-playable" data-vimeo-id="1173730759">
+          <div class="poster" style="background-image: url('thumbnails/1173730759.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 6: 1173730743 -->
+        <article class="card is-playable" data-vimeo-id="1173730743">
+          <div class="poster" style="background-image: url('thumbnails/1173730743.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 7: 1173730729 -->
+        <article class="card is-playable" data-vimeo-id="1173730729">
+          <div class="poster" style="background-image: url('thumbnails/1173730729.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 8: 1173730712 -->
+        <article class="card is-playable" data-vimeo-id="1173730712">
+          <div class="poster" style="background-image: url('thumbnails/1173730712.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 9: 1173730696 -->
+        <article class="card is-playable" data-vimeo-id="1173730696">
+          <div class="poster" style="background-image: url('thumbnails/1173730696.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 10: 1173730689 -->
+        <article class="card is-playable" data-vimeo-id="1173730689">
+          <div class="poster" style="background-image: url('thumbnails/1173730689.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 11: 1173730676 -->
+        <article class="card is-playable" data-vimeo-id="1173730676">
+          <div class="poster" style="background-image: url('thumbnails/1173730676.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 12: 1173730662 -->
+        <article class="card is-playable" data-vimeo-id="1173730662">
+          <div class="poster" style="background-image: url('thumbnails/1173730662.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 13: 1173730642 -->
+        <article class="card is-playable" data-vimeo-id="1173730642">
+          <div class="poster" style="background-image: url('thumbnails/1173730642.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 14: 1173730596 -->
+        <article class="card is-playable" data-vimeo-id="1173730596">
+          <div class="poster" style="background-image: url('thumbnails/1173730596.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 15: 1173730565 -->
+        <article class="card is-playable" data-vimeo-id="1173730565">
+          <div class="poster" style="background-image: url('thumbnails/1173730565.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 16: 1173730542 -->
+        <article class="card is-playable" data-vimeo-id="1173730542">
+          <div class="poster" style="background-image: url('thumbnails/1173730542.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 17: 1173730518 -->
+        <article class="card is-playable" data-vimeo-id="1173730518">
+          <div class="poster" style="background-image: url('thumbnails/1173730518.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 18: 1173730503 -->
+        <article class="card is-playable" data-vimeo-id="1173730503">
+          <div class="poster" style="background-image: url('thumbnails/1173730503.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 19: 1173730487 -->
+        <article class="card is-playable" data-vimeo-id="1173730487">
+          <div class="poster" style="background-image: url('thumbnails/1173730487.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 20: 1173730409 -->
+        <article class="card is-playable" data-vimeo-id="1173730409">
+          <div class="poster" style="background-image: url('thumbnails/1173730409.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 21: 1173730347 -->
+        <article class="card is-playable" data-vimeo-id="1173730347">
+          <div class="poster" style="background-image: url('thumbnails/1173730347.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 22: 1173730314 -->
+        <article class="card is-playable" data-vimeo-id="1173730314">
+          <div class="poster" style="background-image: url('thumbnails/1173730314.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 23: 1173730299 -->
+        <article class="card is-playable" data-vimeo-id="1173730299">
+          <div class="poster" style="background-image: url('thumbnails/1173730299.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 24: 1173730286 -->
+        <article class="card is-playable" data-vimeo-id="1173730286">
+          <div class="poster" style="background-image: url('thumbnails/1173730286.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 25: 1173730264 -->
+        <article class="card is-playable" data-vimeo-id="1173730264">
+          <div class="poster" style="background-image: url('thumbnails/1173730264.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 26: 1173730244 -->
+        <article class="card is-playable" data-vimeo-id="1173730244">
+          <div class="poster" style="background-image: url('thumbnails/1173730244.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 27: 1173730236 -->
+        <article class="card is-playable" data-vimeo-id="1173730236">
+          <div class="poster" style="background-image: url('thumbnails/1173730236.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 28: 1173730225 -->
+        <article class="card is-playable" data-vimeo-id="1173730225">
+          <div class="poster" style="background-image: url('thumbnails/1173730225.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 29: 1173730206 -->
+        <article class="card is-playable" data-vimeo-id="1173730206">
+          <div class="poster" style="background-image: url('thumbnails/1173730206.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+       
+        <!-- Video 32: 1173730082 -->
+        <article class="card is-playable" data-vimeo-id="1173730082">
+          <div class="poster" style="background-image: url('thumbnails/1173730082.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 33: 1173730030 -->
+        <article class="card is-playable" data-vimeo-id="1173730030">
+          <div class="poster" style="background-image: url('thumbnails/1173730030.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 34: 1173730015 -->
+        <article class="card is-playable" data-vimeo-id="1173730015">
+          <div class="poster" style="background-image: url('thumbnails/1173730015.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 35: 1173729994 -->
+        <article class="card is-playable" data-vimeo-id="1173729994">
+          <div class="poster" style="background-image: url('thumbnails/1173729994.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 36: 1173729970 -->
+        <article class="card is-playable" data-vimeo-id="1173729970">
+          <div class="poster" style="background-image: url('thumbnails/1173729970.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 37: 1173729958 -->
+        <article class="card is-playable" data-vimeo-id="1173729958">
+          <div class="poster" style="background-image: url('thumbnails/1173729958.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 38: 1173729943 -->
+        <article class="card is-playable" data-vimeo-id="1173729943">
+          <div class="poster" style="background-image: url('thumbnails/1173729943.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 39: 1173729921 -->
+        <article class="card is-playable" data-vimeo-id="1173729921">
+          <div class="poster" style="background-image: url('thumbnails/1173729921.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 40: 1173729898 -->
+        <article class="card is-playable" data-vimeo-id="1173729898">
+          <div class="poster" style="background-image: url('thumbnails/1173729898.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 41: 1173729852 -->
+        <article class="card is-playable" data-vimeo-id="1173729852">
+          <div class="poster" style="background-image: url('thumbnails/1173729852.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 42: 1173729814 -->
+        <article class="card is-playable" data-vimeo-id="1173729814">
+          <div class="poster" style="background-image: url('thumbnails/1173729814.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 43: 1173729797 -->
+        <article class="card is-playable" data-vimeo-id="1173729797">
+          <div class="poster" style="background-image: url('thumbnails/1173729797.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 44: 1173729756 -->
+        <article class="card is-playable" data-vimeo-id="1173729756">
+          <div class="poster" style="background-image: url('thumbnails/1173729756.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 48: 1173729624 -->
+        <article class="card is-playable" data-vimeo-id="1173729624">
+          <div class="poster" style="background-image: url('thumbnails/1173729624.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 49: 1173729596 -->
+        <article class="card is-playable" data-vimeo-id="1173729596">
+          <div class="poster" style="background-image: url('thumbnails/1173729596.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 50: 1173729574 -->
+        <article class="card is-playable" data-vimeo-id="1173729574">
+          <div class="poster" style="background-image: url('thumbnails/1173729574.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 51: 1173729555 -->
+        <article class="card is-playable" data-vimeo-id="1173729555">
+          <div class="poster" style="background-image: url('thumbnails/1173729555.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 52: 1173729543 -->
+        <article class="card is-playable" data-vimeo-id="1173729543">
+          <div class="poster" style="background-image: url('thumbnails/1173729543.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 53: 1173729513 -->
+        <article class="card is-playable" data-vimeo-id="1173729513">
+          <div class="poster" style="background-image: url('thumbnails/1173729513.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 56: 1173729464 -->
+        <article class="card is-playable" data-vimeo-id="1173729464">
+          <div class="poster" style="background-image: url('thumbnails/1173729464.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 57: 1173729440 -->
+        <article class="card is-playable" data-vimeo-id="1173729440">
+          <div class="poster" style="background-image: url('thumbnails/1173729440.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 58: 1173729413 -->
+        <article class="card is-playable" data-vimeo-id="1173729413">
+          <div class="poster" style="background-image: url('thumbnails/1173729413.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 59: 1173729394 -->
+        <article class="card is-playable" data-vimeo-id="1173729394">
+          <div class="poster" style="background-image: url('thumbnails/1173729394.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 60: 1173729375 -->
+        <article class="card is-playable" data-vimeo-id="1173729375">
+          <div class="poster" style="background-image: url('thumbnails/1173729375.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 61: 1173729339 -->
+        <article class="card is-playable" data-vimeo-id="1173729339">
+          <div class="poster" style="background-image: url('thumbnails/1173729339.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 62: 1173729315 -->
+        <article class="card is-playable" data-vimeo-id="1173729315">
+          <div class="poster" style="background-image: url('thumbnails/1173729315.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 63: 1173729293 -->
+        <article class="card is-playable" data-vimeo-id="1173729293">
+          <div class="poster" style="background-image: url('thumbnails/1173729293.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 64: 1173729259 -->
+        <article class="card is-playable" data-vimeo-id="1173729259">
+          <div class="poster" style="background-image: url('thumbnails/1173729259.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 65: 1173729223 -->
+        <article class="card is-playable" data-vimeo-id="1173729223">
+          <div class="poster" style="background-image: url('thumbnails/1173729223.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 66: 1173729174 -->
+        <article class="card is-playable" data-vimeo-id="1173729174">
+          <div class="poster" style="background-image: url('thumbnails/1173729174.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="videoModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-dialog">
+      <button class="modal-close" type="button" data-close="true">×</button>
+      <div class="modal-frame">
+        <iframe id="vimeoPlayer" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('vimeoPlayer');
+    const closeButtons = document.querySelectorAll('[data-close="true"]');
+
+    function openModal(vimeoId) {
+      if (!vimeoId) return;
+      iframe.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&badge=0&byline=0&portrait=0&title=0`;
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      iframe.src = '';
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.card.is-playable').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.action')) return;
+        const vimeoId = card.dataset.vimeoId;
+        if (vimeoId) openModal(vimeoId);
+      });
+
+      const playBtn = card.querySelector('.action');
+      if (playBtn) {
+        playBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const vimeoId = card.dataset.vimeoId;
+          if (vimeoId) openModal(vimeoId);
+        });
+      }
+    });
+
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
