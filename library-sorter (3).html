@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Library Sorter — Training Academy</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+  :root {
+    --bg:#0b1220;--panel:rgba(14,23,42,0.98);--line:rgba(148,163,184,0.18);
+    --text:#e2e8f0;--muted:#94a3b8;--accent:#38bdf8;
+    --red:#ef4444;--green:#34d399;--yellow:#fbbf24;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'IBM Plex Sans',sans-serif;background:radial-gradient(circle at 10% 0%,#1d4ed8 0%,#0b1220 35%);color:var(--text);min-height:100vh;padding:40px 24px;}
+  .wrapper{max-width:960px;margin:0 auto;}
+  h1{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:var(--accent);letter-spacing:-0.02em;margin-bottom:6px;}
+  .subtitle{color:var(--muted);font-size:14px;margin-bottom:32px;line-height:1.5;}
+
+  .upload-box{background:var(--panel);border:2px dashed rgba(56,189,248,0.3);border-radius:14px;padding:32px;text-align:center;margin-bottom:28px;transition:border-color 0.15s;position:relative;}
+  .upload-box:hover{border-color:var(--accent);}
+  .upload-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+  .upload-icon{font-size:32px;margin-bottom:8px;}
+  .upload-text{font-size:14px;color:var(--muted);}
+  .upload-text strong{color:var(--accent);}
+  .loaded-tag{display:none;margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);}
+  .loaded-tag.on{display:block;}
+
+  .sorter{display:none;}
+  .sorter.on{display:block;}
+  .top-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;}
+  .section-label{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);}
+  .hint{font-size:12px;color:#475569;margin-bottom:18px;}
+  .hint b{color:var(--muted);}
+  .btn{font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border-radius:9px;border:none;cursor:pointer;transition:all 0.15s;}
+  .btn-dl{background:var(--green);color:#0b1220;}
+  .btn-dl:hover{background:#6ee7b7;}
+
+  .cat-list{display:flex;flex-direction:column;gap:14px;}
+  .cat-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:box-shadow 0.15s;}
+  .cat-block.ghost{opacity:0.3;}
+
+  .cat-head{display:flex;align-items:center;gap:10px;padding:13px 16px;background:rgba(255,255,255,0.03);border-bottom:1px solid var(--line);cursor:grab;user-select:none;}
+  .cat-head:active{cursor:grabbing;}
+  .handle{font-size:15px;color:#475569;flex-shrink:0;}
+
+  /* Category name — static and editing states */
+  .cat-name-wrap{flex:1;display:flex;align-items:center;gap:8px;min-width:0;}
+  .cat-name-text{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .cat-name-input{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);font-weight:600;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.4);border-radius:6px;padding:3px 8px;outline:none;flex:1;display:none;}
+  .cat-name-input.on{display:block;}
+  .cat-name-text.editing{display:none;}
+
+  .edit-btn{background:none;border:1px solid rgba(148,163,184,0.15);color:#475569;cursor:pointer;font-size:12px;padding:3px 7px;border-radius:5px;flex-shrink:0;transition:all 0.15s;line-height:1.4;}
+  .edit-btn:hover{border-color:var(--yellow);color:var(--yellow);}
+  .edit-btn.saving{border-color:var(--green);color:var(--green);}
+
+  .cat-badge{font-size:11px;color:var(--muted);background:rgba(148,163,184,0.1);padding:2px 8px;border-radius:10px;flex-shrink:0;}
+  .collapse-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px;border-radius:4px;line-height:1;flex-shrink:0;}
+  .collapse-btn:hover{color:var(--text);}
+
+  .cards-zone{padding:10px;display:flex;flex-direction:column;gap:5px;min-height:36px;}
+  .cards-zone.hidden{display:none;}
+
+  .card-row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(148,163,184,0.1);border-radius:7px;padding:8px 12px;cursor:grab;user-select:none;transition:background 0.1s,border-color 0.1s;}
+  .card-row:hover{background:rgba(56,189,248,0.05);border-color:rgba(56,189,248,0.2);}
+  .card-row:active{cursor:grabbing;}
+  .card-row.ghost{opacity:0.3;}
+  .type-badge{font-size:10px;font-weight:700;letter-spacing:0.06em;padding:2px 7px;border-radius:4px;flex-shrink:0;}
+  .type-badge.video{background:rgba(56,189,248,0.12);color:var(--accent);border:1px solid rgba(56,189,248,0.25);}
+  .type-badge.pdf{background:rgba(239,68,68,0.12);color:var(--red);border:1px solid rgba(239,68,68,0.25);}
+  .card-title-text{font-size:13px;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+  .divider{border:none;border-top:1px solid var(--line);margin:28px 0;}
+  .instructions{background:rgba(56,189,248,0.05);border:1px solid rgba(56,189,248,0.2);border-radius:10px;padding:16px 20px;font-size:13px;line-height:1.7;color:var(--muted);}
+  .instructions strong{color:var(--text);}
+  .instructions ol{padding-left:18px;margin-top:6px;}
+  .instructions li{margin-bottom:4px;}
+  .instructions code{font-family:'IBM Plex Mono',monospace;font-size:11px;background:rgba(56,189,248,0.1);padding:1px 5px;border-radius:3px;color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <h1>// Library Sorter</h1>
+  <p class="subtitle">Upload your <code style="font-size:11px;font-family:monospace;background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px">index.html</code> — drag to reorder, click ✏ to rename categories, then download.</p>
+
+  <div class="upload-box">
+    <input type="file" accept=".html" onchange="loadFile(event)"/>
+    <div class="upload-icon">📂</div>
+    <div class="upload-text"><strong>Click to select</strong> your index.html file</div>
+    <div class="loaded-tag" id="loadedTag"></div>
+  </div>
+
+  <div class="sorter" id="sorter">
+    <div class="top-bar">
+      <span class="section-label">// Drag to reorder · ✏ to rename</span>
+      <button class="btn btn-dl" onclick="downloadFile()">⬇ Download updated index.html</button>
+    </div>
+    <p class="hint"><b>☰ Category header</b> — drag to reorder &nbsp;·&nbsp; <b>☰ Card row</b> — drag within category &nbsp;·&nbsp; <b>✏</b> — rename category &nbsp;·&nbsp; <b>▾</b> — collapse</p>
+    <div class="cat-list" id="catList"></div>
+    <hr class="divider"/>
+    <div class="instructions">
+      <strong>How to deploy:</strong>
+      <ol>
+        <li>Click <b>Download updated index.html</b> above.</li>
+        <li>Upload it to your GitHub repo replacing the existing <code>index.html</code>.</li>
+        <li>Hard refresh with <code>Ctrl+Shift+R</code> after it deploys.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<script>
+let originalHTML = '';
+let cardData = [];
+let catOrder = [];
+let catCards = {};
+// Track renamed categories: { oldName: newName }
+let catRenames = {};
+
+function getCategory(title) {
+  if (title.includes('Workflow Management')) return 'Workflow Management';
+  if (title.includes('Product Dive')) return 'Product Dive';
+  if (/\bEV\b|Electric|Sustainability|EV Management/i.test(title)) return 'EV & Sustainability';
+  if (/Report|CO2|Dashboard|Creating Reports/i.test(title)) return 'Reporting & Analytics';
+  if (/Configuration|Configuring|Administration|Setup|Device|Driver Terminal/i.test(title)) return 'Setup & Configuration';
+  return 'General Training';
+}
+
+function loadFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    originalHTML = ev.target.result;
+    document.getElementById('loadedTag').textContent = '✓ Loaded: ' + file.name;
+    document.getElementById('loadedTag').classList.add('on');
+    parseCards();
+    buildUI();
+    document.getElementById('sorter').classList.add('on');
+  };
+  reader.readAsText(file);
+}
+
+function parseCards() {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(originalHTML, 'text/html');
+  const articles = doc.querySelectorAll('article.card');
+  cardData = [];
+  catCards = {};
+  catRenames = {};
+
+  articles.forEach(function(el) {
+    const title = el.dataset.title || '';
+    const isPdf = el.classList.contains('is-pdf');
+    const vimeoId = el.dataset.vimeoId || '';
+    let cat = (el.dataset.category || '').replace(/&amp;/g,'&');
+    if (!cat) cat = getCategory(title);
+    const idx = cardData.length;
+    cardData.push({ title, type: isPdf ? 'pdf' : 'video', vimeoId, outerHTML: el.outerHTML });
+    if (!catCards[cat]) catCards[cat] = [];
+    catCards[cat].push(idx);
+  });
+
+  catOrder = Object.keys(catCards).sort();
+}
+
+function buildUI() {
+  const list = document.getElementById('catList');
+  list.innerHTML = '';
+  catOrder.forEach(function(cat) { list.appendChild(makeCatBlock(cat)); });
+  initSortable();
+}
+
+function makeCatBlock(cat) {
+  const block = document.createElement('div');
+  block.className = 'cat-block';
+  block.dataset.cat = cat;
+
+  const head = document.createElement('div');
+  head.className = 'cat-head';
+
+  // Name wrap: static label + hidden input
+  const nameWrap = document.createElement('div');
+  nameWrap.className = 'cat-name-wrap';
+
+  const nameText = document.createElement('span');
+  nameText.className = 'cat-name-text';
+  nameText.textContent = cat;
+
+  const nameInput = document.createElement('input');
+  nameInput.type = 'text';
+  nameInput.className = 'cat-name-input';
+  nameInput.value = cat;
+
+  nameWrap.appendChild(nameText);
+  nameWrap.appendChild(nameInput);
+
+  // Edit button
+  const editBtn = document.createElement('button');
+  editBtn.className = 'edit-btn';
+  editBtn.textContent = '✏';
+  editBtn.title = 'Rename category';
+  editBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isEditing = nameInput.classList.contains('on');
+    if (!isEditing) {
+      // Enter edit mode
+      nameText.classList.add('editing');
+      nameInput.classList.add('on');
+      nameInput.focus();
+      nameInput.select();
+      editBtn.textContent = '✓';
+      editBtn.classList.add('saving');
+      editBtn.title = 'Save name';
+    } else {
+      saveCatName(block, nameText, nameInput, editBtn);
+    }
+  });
+
+  // Save on Enter, cancel on Escape
+  nameInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { saveCatName(block, nameText, nameInput, editBtn); }
+    if (e.key === 'Escape') {
+      nameInput.value = nameText.textContent;
+      nameText.classList.remove('editing');
+      nameInput.classList.remove('on');
+      editBtn.textContent = '✏';
+      editBtn.classList.remove('saving');
+      editBtn.title = 'Rename category';
+    }
+  });
+
+  const badge = document.createElement('span');
+  badge.className = 'cat-badge';
+  badge.textContent = (catCards[cat]||[]).length + ' items';
+
+  const collapseBtn = document.createElement('button');
+  collapseBtn.className = 'collapse-btn';
+  collapseBtn.textContent = '▾';
+  collapseBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleCollapse(collapseBtn);
+  });
+
+  head.innerHTML = '<span class="handle">☰</span>';
+  head.appendChild(nameWrap);
+  head.appendChild(editBtn);
+  head.appendChild(badge);
+  head.appendChild(collapseBtn);
+
+  const zone = document.createElement('div');
+  zone.className = 'cards-zone';
+  zone.dataset.cat = cat;
+
+  (catCards[cat]||[]).forEach(function(idx) {
+    zone.appendChild(makeCardRow(idx));
+  });
+
+  block.appendChild(head);
+  block.appendChild(zone);
+  return block;
+}
+
+function saveCatName(block, nameText, nameInput, editBtn) {
+  const newName = nameInput.value.trim();
+  if (!newName) { nameInput.value = nameText.textContent; }
+  else {
+    const oldName = block.dataset.cat;
+    if (newName !== oldName) {
+      // Track rename
+      catRenames[oldName] = newName;
+      // Update data structures
+      catCards[newName] = catCards[oldName];
+      delete catCards[oldName];
+      block.dataset.cat = newName;
+      block.querySelector('.cards-zone').dataset.cat = newName;
+      nameText.textContent = newName;
+      nameInput.value = newName;
+    }
+  }
+  nameText.classList.remove('editing');
+  nameInput.classList.remove('on');
+  editBtn.textContent = '✏';
+  editBtn.classList.remove('saving');
+  editBtn.title = 'Rename category';
+}
+
+function makeCardRow(idx) {
+  const c = cardData[idx];
+  const row = document.createElement('div');
+  row.className = 'card-row';
+  row.dataset.idx = String(idx);
+  row.innerHTML =
+    '<span class="handle">☰</span>' +
+    '<span class="type-badge ' + c.type + '">' + c.type.toUpperCase() + '</span>' +
+    '<span class="card-title-text">' + esc(c.title) + '</span>';
+  return row;
+}
+
+function toggleCollapse(btn) {
+  const zone = btn.closest('.cat-block').querySelector('.cards-zone');
+  zone.classList.toggle('hidden');
+  btn.textContent = zone.classList.contains('hidden') ? '▸' : '▾';
+}
+
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Sortable — single global handler, cards can cross categories ──
+let _dragging = null;
+let _placeholder = null;
+let _dragType = null; // 'cat' or 'card'
+
+function initSortable() {
+  document.addEventListener('pointerdown', onGlobalDown);
+}
+
+function onGlobalDown(e) {
+  if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
+
+  // Category drag — handle is .cat-head
+  const catHead = e.target.closest('.cat-head');
+  if (catHead) {
+    const block = catHead.closest('.cat-block');
+    if (!block) return;
+    e.preventDefault();
+    _dragType = 'cat';
+    _dragging = block;
+    _dragging.classList.add('ghost');
+    _placeholder = makePlaceholder(_dragging.offsetHeight, '12', '14');
+    _dragging.parentNode.insertBefore(_placeholder, _dragging.nextSibling);
+    document.addEventListener('pointermove', onGlobalMove);
+    document.addEventListener('pointerup', onGlobalUp);
+    return;
+  }
+
+  // Card drag — handle is .card-row (anywhere on the row)
+  const cardRow = e.target.closest('.card-row');
+  if (cardRow) {
+    e.preventDefault();
+    _dragType = 'card';
+    _dragging = cardRow;
+    _dragging.classList.add('ghost');
+    _placeholder = makePlaceholder(_dragging.offsetHeight, '7', '5');
+    _dragging.parentNode.insertBefore(_placeholder, _dragging.nextSibling);
+    document.addEventListener('pointermove', onGlobalMove);
+    document.addEventListener('pointerup', onGlobalUp);
+    return;
+  }
+}
+
+function makePlaceholder(h, radius, mb) {
+  const p = document.createElement('div');
+  p.style.cssText = 'height:' + h + 'px;background:rgba(56,189,248,0.08);border:2px dashed rgba(56,189,248,0.35);border-radius:' + radius + 'px;margin-bottom:' + mb + 'px;transition:none;';
+  return p;
+}
+
+function onGlobalMove(e) {
+  if (!_dragging) return;
+
+  if (_dragType === 'cat') {
+    // Reorder category blocks
+    const container = document.getElementById('catList');
+    const items = Array.from(container.querySelectorAll(':scope > .cat-block')).filter(function(el){ return el !== _dragging; });
+    let inserted = false;
+    for (let i = 0; i < items.length; i++) {
+      const r = items[i].getBoundingClientRect();
+      if (e.clientY < r.top + r.height / 2) {
+        container.insertBefore(_placeholder, items[i]);
+        inserted = true; break;
+      }
+    }
+    if (!inserted) container.appendChild(_placeholder);
+
+  } else {
+    // Card drag — find which zone the cursor is over
+    const allZones = Array.from(document.querySelectorAll('.cards-zone:not(.hidden)'));
+    let targetZone = null;
+    let bestDist = Infinity;
+    allZones.forEach(function(z) {
+      const r = z.getBoundingClientRect();
+      // expand hit area slightly so dropping near edge of zone works
+      if (e.clientY >= r.top - 20 && e.clientY <= r.bottom + 20 &&
+          e.clientX >= r.left - 10 && e.clientX <= r.right + 10) {
+        const dist = Math.abs(e.clientY - (r.top + r.height / 2));
+        if (dist < bestDist) { bestDist = dist; targetZone = z; }
+      }
+    });
+
+    if (!targetZone) return;
+
+    // Highlight the target zone's category block
+    document.querySelectorAll('.cat-block').forEach(function(b){ b.style.outline = ''; });
+    const targetBlock = targetZone.closest('.cat-block');
+    if (targetBlock && targetBlock !== _dragging.closest('.cat-block')) {
+      targetBlock.style.outline = '2px solid rgba(56,189,248,0.4)';
+    }
+
+    // Position placeholder within target zone
+    const rows = Array.from(targetZone.querySelectorAll(':scope > .card-row')).filter(function(r){ return r !== _dragging; });
+    let inserted = false;
+    for (let i = 0; i < rows.length; i++) {
+      const r = rows[i].getBoundingClientRect();
+      if (e.clientY < r.top + r.height / 2) {
+        targetZone.insertBefore(_placeholder, rows[i]);
+        inserted = true; break;
+      }
+    }
+    if (!inserted) targetZone.appendChild(_placeholder);
+  }
+}
+
+function onGlobalUp() {
+  if (!_dragging) return;
+
+  // Clear zone highlights
+  document.querySelectorAll('.cat-block').forEach(function(b){ b.style.outline = ''; });
+
+  _placeholder.parentNode.insertBefore(_dragging, _placeholder);
+  _placeholder.remove();
+  _dragging.classList.remove('ghost');
+
+  // Update card-row zone badge counts
+  if (_dragType === 'card') {
+    document.querySelectorAll('.cat-block').forEach(function(block) {
+      const badge = block.querySelector('.cat-badge');
+      const count = block.querySelectorAll('.card-row').length;
+      if (badge) badge.textContent = count + ' items';
+    });
+  }
+
+  _dragging = null;
+  _placeholder = null;
+  _dragType = null;
+  document.removeEventListener('pointermove', onGlobalMove);
+  document.removeEventListener('pointerup', onGlobalUp);
+}
+
+// ── Download ──────────────────────────────────────────────────
+function downloadFile() {
+  // Read final order from DOM
+  const finalCatOrder = Array.from(document.querySelectorAll('#catList > .cat-block')).map(function(b){ return b.dataset.cat; });
+  const finalCatCards = {};
+  document.querySelectorAll('.cards-zone').forEach(function(zone) {
+    finalCatCards[zone.dataset.cat] = Array.from(zone.querySelectorAll('.card-row')).map(function(r){ return parseInt(r.dataset.idx); });
+  });
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(originalHTML, 'text/html');
+  doc.querySelectorAll('article.card').forEach(function(el){ el.remove(); });
+
+  const grid = doc.querySelector('.grid');
+  if (!grid) { alert('Could not find .grid — make sure you uploaded the correct index.html.'); return; }
+
+  finalCatOrder.forEach(function(cat) {
+    const indices = finalCatCards[cat] || [];
+    grid.appendChild(doc.createComment(' Category: ' + cat + ' '));
+    indices.forEach(function(idx) {
+      const temp = doc.createElement('div');
+      temp.innerHTML = cardData[idx].outerHTML;
+      const article = temp.firstElementChild;
+      if (article) {
+        article.dataset.category = cat;
+        // Also update sidebar category logic if needed
+        grid.appendChild(article);
+      }
+    });
+  });
+
+  // Patch JS: replace alphabetical sort with fixed order + handle renames in getVideoCategory
+  const fixedOrder = JSON.stringify(finalCatOrder);
+  let html = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+
+  // Fix sort order
+  html = html.replace(
+    'const sortedCategories = Object.keys(categories).sort();',
+    'const FIXED_ORDER = ' + fixedOrder + ';\n      const sortedCategories = FIXED_ORDER.filter(function(c){return categories[c];}).concat(Object.keys(categories).filter(function(c){return !FIXED_ORDER.includes(c);}).sort());'
+  );
+
+  // Apply renames to getVideoCategory return values
+  Object.keys(catRenames).forEach(function(oldName) {
+    const newName = catRenames[oldName];
+    // Replace return 'oldName' with return 'newName' in the JS
+    const escaped = oldName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    html = html.replace(
+      new RegExp("return '" + escaped + "'", 'g'),
+      "return '" + newName.replace(/'/g, "\\'") + "'"
+    );
+  });
+
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'index.html'; a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
