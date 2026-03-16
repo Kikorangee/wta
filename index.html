@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Training Hub â€” Vimeo</title>
+<title>Training Hub — Complete Library</title>
 <style>
 :root { --bg:#0b1220; --panel:rgba(14,23,42,0.95); --line:rgba(148,163,184,0.2); --text:#e2e8f0; --muted:#cbd5e1; --accent:#38bdf8; }
 * { box-sizing:border-box; }
@@ -31,600 +31,703 @@ h1 { margin:0; font-size:32px; line-height:1.1; }
 .card.is-playable { cursor:pointer; }
 .card.is-playable:hover { outline:2px solid rgba(56,189,248,0.35); }
 
-.poster { position:relative; padding:18px; width:100%; height:100%; background:linear-gradient(145deg,#0ea5e9 0%,#1d4ed8 38%,#0f172a 100%); aspect-ratio:16/9; }
-.badge { position:relative; z-index:1; display:inline-block; padding:6px 10px; border-radius:999px; font-size:12px; color:#dbeafe; background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.18); }
+.poster { position:relative; width:100%; aspect-ratio:16/9; background-size: cover; background-position: center; }
 
-/* Title centered in poster */
-.poster-title { position:absolute; left:18px; right:18px; top:50%; transform:translateY(-50%); text-align:center; font-size:22px; font-weight:700; line-height:1.2; padding:0 8px; }
+/* Hide all text overlays */
+.badge { display: none; }
+.poster-title { display: none; }
+.desc { display: none; }
 
-/* Animated GIF logo on cards */
 .poster-logo { position:absolute; left:16px; bottom:16px; width:130px; max-height:64px; object-fit:contain; opacity:0.95; }
 
 .card-body { padding:14px 14px 16px; }
-.status { margin:0 0 6px; font-weight:700; color:#86efac; }
-.status.soon { color:#fbbf24; }
-h3 { margin:0 0 8px; font-size:18px; line-height:1.25; max-height:46px; overflow:hidden; }
-.desc { margin:0 0 10px; color:var(--muted); font-size:13px; line-height:1.4; max-height:38px; overflow:hidden; }
 .actions { margin:0; display:flex; gap:10px; align-items:center; }
 .action { display:inline-block; color:#fff; font-weight:700; text-decoration:none; padding:8px 10px; border-radius:10px; border:1px solid rgba(148,163,184,0.25); background:rgba(15,23,42,0.55); }
 .action:hover { text-decoration:underline; }
-.action.disabled { opacity:0.6; cursor:not-allowed; text-decoration:none; }
-@media (max-width:900px) { body { display:block; } .sidebar { position:static; width:auto; height:auto; } .main { margin-left:0; width:auto; padding:20px; } h1 { font-size:26px; } }
 
-/* Modal */
 .modal { position:fixed; inset:0; display:none; z-index:9999; }
 .modal.is-open { display:block; }
 .modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.7); }
-.modal-dialog { position:relative; width:min(1000px, 92vw); margin:6vh auto; background:#0b1220; border:1px solid rgba(148,163,184,0.25); border-radius:14px; overflow:hidden; box-shadow:0 20px 70px rgba(0,0,0,0.6); }
-.modal-close { position:absolute; top:10px; right:10px; width:40px; height:40px; border-radius:10px; border:1px solid rgba(148,163,184,0.25); background:rgba(15,23,42,0.85); color:#fff; font-size:22px; cursor:pointer; z-index:2; }
+.modal-dialog { position:relative; width:min(1000px, 92vw); margin:6vh auto; background:#0b1220; border:1px solid rgba(148,163,184,0.25); border-radius:14px; overflow:hidden; }
+.modal-close { position:absolute; top:10px; right:10px; width:40px; height:40px; border-radius:10px; background:rgba(15,23,42,0.85); color:#fff; font-size:22px; cursor:pointer; z-index:2; }
 .modal-frame { aspect-ratio:16/9; width:100%; background:#000; }
 .modal-frame iframe { width:100%; height:100%; display:block; }
 </style>
 </head>
 <body>
   <aside class="sidebar">
-    <h2>Direct Track</h2>
-    <p>Training hub (Vimeo modal playback). Videos without a Vimeo link show as â€œComing soonâ€.</p>
-
-    
+    <h2>Training Hub</h2>
+    <p>Complete Vimeo video library</p>
     <div class="links">
       <h3 class="sidebar-subhead">Helpful links</h3>
-      <a href="https://help.webfleet.com/en_nz/help/welcome-to-webfleet/" target="_blank" rel="noopener noreferrer">Webfleet Help Center <span>Guides &amp; articles</span></a><a href="https://login.webfleet.com/auth/realms/webfleet/protocol/openid-connect/auth?response_type=code&amp;client_id=atlantis&amp;redirect_uri=https%3A%2F%2Flive-wf.webfleet.com%2Flogin%3FlogoutRedirect%3Dhttps%253A%252F%252Flive-wf.webfleet.com%252Fweb%252Fmap&amp;state=3%28x0%2F%21%7E&amp;scope=openid&amp;brand_id=webfleet" target="_blank" rel="noopener noreferrer">Webfleet Login <span>Sign in</span></a><a href="https://www.webfleet.com/en_nz/webfleet/partners/integration/developer-resources/" target="_blank" rel="noopener noreferrer">Webfleet Developer Resources (API Docs) <span>Integrations</span></a><a href="https://www.webfleet.com/en_nz/webfleet/support/" target="_blank" rel="noopener noreferrer">Webfleet Support <span>Support options</span></a><a href="https://www.webfleet.com/en_nz/webfleet/resources/" target="_blank" rel="noopener noreferrer">Webfleet Case Studies &amp; Resources <span>Articles &amp; stories</span></a><a href="https://portals.webfleet.com/s/?language=en_US" target="_blank" rel="noopener noreferrer">Webfleet Community <span>Community portal</span></a>
+      <a href="#">Documentation</a>
+      <a href="#">Support</a>
     </div>
-  
-
     <h3 class="sidebar-subhead">Categories</h3>
-    <a href="#tracking-and-fleet">Tracking &amp; Fleet <span>6</span></a><a href="#reporting">Reporting <span>3</span></a><a href="#initial-setup">Initial Setup <span>4</span></a><a href="#general">General <span>5</span></a><a href="#orders-and-workflow">Orders &amp; Workflow <span>8</span></a>
+    <a href="#all">All Videos <span>66</span></a>
   </aside>
 
   <main class="main">
     <div class="header">
-      <h1>Training Hub â€” Vimeo Library</h1>
+      <h1>Training Library</h1>
     </div>
-    <p class="intro">Click a card to play in a modal. If a video is not yet published to Vimeo, it will show as â€œComing soonâ€.</p>
+    <p class="intro">Click any card to play video</p>
 
-    
-    <section class="section" id="tracking-and-fleet">
+    <section class="section" id="all">
       <div class="section-head">
-        <div>
-          <p class="eyebrow">Category</p>
-          <h2>Tracking &amp; Fleet</h2>
-        </div>
-        <p>6 videos</p>
+        <h2>All Videos</h2>
+        <p>66 videos</p>
       </div>
       <div class="grid">
 
-    <article class="card is-playable" data-drive-id="1173171576" data-title="Case Study" data-category="Tracking &amp; Fleet">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Tracking &amp; Fleet</div>
-          <div class="poster-title">Case Study</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Case Study</h3>
-        <p class="desc">Monitor vehicles, drivers, assets, and day-to-day fleet activity.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 1: 1173730849 -->
+        <article class="card is-playable" data-vimeo-id="1173730849">
+          <div class="poster" style="background-image: url('thumbnails/1173730849.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173172012" data-title="Fleet Optimisation" data-category="Tracking &amp; Fleet">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Tracking &amp; Fleet</div>
-          <div class="poster-title">Fleet Optimisation</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Fleet Optimisation</h3>
-        <p class="desc">Monitor vehicles, drivers, assets, and day-to-day fleet activity.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 2: 1173730833 -->
+        <article class="card is-playable" data-vimeo-id="1173730833">
+          <div class="poster" style="background-image: url('thumbnails/1173730833.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171367" data-title="The roadmap to implementing EVs in your fleet Webinar Webfleet Solutions" data-category="Tracking &amp; Fleet">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Tracking &amp; Fleet</div>
-          <div class="poster-title">The roadmap to implementing EVs in your fleet Webinar Webfleet Solutions</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>The roadmap to implementing EVs in your fleet Webinar Webfleet Solutions</h3>
-        <p class="desc">Monitor vehicles, drivers, assets, and day-to-day fleet activity.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 3: 1173730808 -->
+        <article class="card is-playable" data-vimeo-id="1173730808">
+          <div class="poster" style="background-image: url('thumbnails/1173730808.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171868" data-title="Vehicle Tracking" data-category="Tracking &amp; Fleet">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Tracking &amp; Fleet</div>
-          <div class="poster-title">Vehicle Tracking</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Vehicle Tracking</h3>
-        <p class="desc">Monitor vehicles, drivers, assets, and day-to-day fleet activity.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 4: 1173730795 -->
+        <article class="card is-playable" data-vimeo-id="1173730795">
+          <div class="poster" style="background-image: url('thumbnails/1173730795.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171876" data-title="Webfleet PRO X" data-category="Tracking &amp; Fleet">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Tracking &amp; Fleet</div>
-          <div class="poster-title">Webfleet PRO X</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Webfleet PRO X</h3>
-        <p class="desc">Monitor vehicles, drivers, assets, and day-to-day fleet activity.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 5: 1173730759 -->
+        <article class="card is-playable" data-vimeo-id="1173730759">
+          <div class="poster" style="background-image: url('thumbnails/1173730759.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171606" data-title="Webfleet Video  Safeguard your drivers and vehicles" data-category="Tracking &amp; Fleet">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Tracking &amp; Fleet</div>
-          <div class="poster-title">Webfleet Video  Safeguard your drivers and vehicles</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Webfleet Video  Safeguard your drivers and vehicles</h3>
-        <p class="desc">Monitor vehicles, drivers, assets, and day-to-day fleet activity.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
-      </div>
-    </section>
+        <!-- Video 6: 1173730743 -->
+        <article class="card is-playable" data-vimeo-id="1173730743">
+          <div class="poster" style="background-image: url('thumbnails/1173730743.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <section class="section" id="reporting">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Category</p>
-          <h2>Reporting</h2>
-        </div>
-        <p>3 videos</p>
-      </div>
-      <div class="grid">
+        <!-- Video 7: 1173730729 -->
+        <article class="card is-playable" data-vimeo-id="1173730729">
+          <div class="poster" style="background-image: url('thumbnails/1173730729.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171683" data-title="CO2 Emmissions Reporting" data-category="Reporting">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Reporting</div>
-          <div class="poster-title">CO2 Emmissions Reporting</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>CO2 Emmissions Reporting</h3>
-        <p class="desc">Review dashboards, reports, KPIs, and management insights.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 8: 1173730712 -->
+        <article class="card is-playable" data-vimeo-id="1173730712">
+          <div class="poster" style="background-image: url('thumbnails/1173730712.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171717" data-title="Creating Reports" data-category="Reporting">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Reporting</div>
-          <div class="poster-title">Creating Reports</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Creating Reports</h3>
-        <p class="desc">Review dashboards, reports, KPIs, and management insights.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 9: 1173730696 -->
+        <article class="card is-playable" data-vimeo-id="1173730696">
+          <div class="poster" style="background-image: url('thumbnails/1173730696.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171858" data-title="The Dashboard" data-category="Reporting">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Reporting</div>
-          <div class="poster-title">The Dashboard</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>The Dashboard</h3>
-        <p class="desc">Review dashboards, reports, KPIs, and management insights.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
-      </div>
-    </section>
+        <!-- Video 10: 1173730689 -->
+        <article class="card is-playable" data-vimeo-id="1173730689">
+          <div class="poster" style="background-image: url('thumbnails/1173730689.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <section class="section" id="initial-setup">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Category</p>
-          <h2>Initial Setup</h2>
-        </div>
-        <p>4 videos</p>
-      </div>
-      <div class="grid">
+        <!-- Video 11: 1173730676 -->
+        <article class="card is-playable" data-vimeo-id="1173730676">
+          <div class="poster" style="background-image: url('thumbnails/1173730676.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171695" data-title="Configuring Work App" data-category="Initial Setup">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Initial Setup</div>
-          <div class="poster-title">Configuring Work App</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Configuring Work App</h3>
-        <p class="desc">Set up users, devices, permissions, and core Webfleet settings.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 12: 1173730662 -->
+        <article class="card is-playable" data-vimeo-id="1173730662">
+          <div class="poster" style="background-image: url('thumbnails/1173730662.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171734" data-title="Device Configuration" data-category="Initial Setup">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Initial Setup</div>
-          <div class="poster-title">Device Configuration</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Device Configuration</h3>
-        <p class="desc">Set up users, devices, permissions, and core Webfleet settings.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 13: 1173730642 -->
+        <article class="card is-playable" data-vimeo-id="1173730642">
+          <div class="poster" style="background-image: url('thumbnails/1173730642.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171747" data-title="Driver Terminal Configuration" data-category="Initial Setup">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Initial Setup</div>
-          <div class="poster-title">Driver Terminal Configuration</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Driver Terminal Configuration</h3>
-        <p class="desc">Set up users, devices, permissions, and core Webfleet settings.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 14: 1173730596 -->
+        <article class="card is-playable" data-vimeo-id="1173730596">
+          <div class="poster" style="background-image: url('thumbnails/1173730596.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171832" data-title="Self-Service Administration" data-category="Initial Setup">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Initial Setup</div>
-          <div class="poster-title">Self-Service Administration</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Self-Service Administration</h3>
-        <p class="desc">Set up users, devices, permissions, and core Webfleet settings.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
-      </div>
-    </section>
+        <!-- Video 15: 1173730565 -->
+        <article class="card is-playable" data-vimeo-id="1173730565">
+          <div class="poster" style="background-image: url('thumbnails/1173730565.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <section class="section" id="general">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Category</p>
-          <h2>General</h2>
-        </div>
-        <p>5 videos</p>
-      </div>
-      <div class="grid">
+        <!-- Video 16: 1173730542 -->
+        <article class="card is-playable" data-vimeo-id="1173730542">
+          <div class="poster" style="background-image: url('thumbnails/1173730542.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171461" data-title="Get the most value from your EVs" data-category="General">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">General</div>
-          <div class="poster-title">Get the most value from your EVs</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Get the most value from your EVs</h3>
-        <p class="desc">General Webfleet and Direct Track training content.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 17: 1173730518 -->
+        <article class="card is-playable" data-vimeo-id="1173730518">
+          <div class="poster" style="background-image: url('thumbnails/1173730518.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171777" data-title="Green &amp; Safe driving" data-category="General">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">General</div>
-          <div class="poster-title">Green &amp; Safe driving</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Green &amp; Safe driving</h3>
-        <p class="desc">General Webfleet and Direct Track training content.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 18: 1173730503 -->
+        <article class="card is-playable" data-vimeo-id="1173730503">
+          <div class="poster" style="background-image: url('thumbnails/1173730503.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171784" data-title="Optidrive 360" data-category="General">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">General</div>
-          <div class="poster-title">Optidrive 360</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Optidrive 360</h3>
-        <p class="desc">General Webfleet and Direct Track training content.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 19: 1173730487 -->
+        <article class="card is-playable" data-vimeo-id="1173730487">
+          <div class="poster" style="background-image: url('thumbnails/1173730487.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171799" data-title="Otidrive 360 Driver Ter5minal" data-category="General">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">General</div>
-          <div class="poster-title">Otidrive 360 Driver Ter5minal</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Otidrive 360 Driver Ter5minal</h3>
-        <p class="desc">General Webfleet and Direct Track training content.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 20: 1173730409 -->
+        <article class="card is-playable" data-vimeo-id="1173730409">
+          <div class="poster" style="background-image: url('thumbnails/1173730409.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171840" data-title="Service Module Advanced" data-category="General">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">General</div>
-          <div class="poster-title">Service Module Advanced</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Service Module Advanced</h3>
-        <p class="desc">General Webfleet and Direct Track training content.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
-      </div>
-    </section>
+        <!-- Video 21: 1173730347 -->
+        <article class="card is-playable" data-vimeo-id="1173730347">
+          <div class="poster" style="background-image: url('thumbnails/1173730347.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <section class="section" id="orders-and-workflow">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Category</p>
-          <h2>Orders &amp; Workflow</h2>
-        </div>
-        <p>8 videos</p>
-      </div>
-      <div class="grid">
+        <!-- Video 22: 1173730314 -->
+        <article class="card is-playable" data-vimeo-id="1173730314">
+          <div class="poster" style="background-image: url('thumbnails/1173730314.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171894" data-title="Workflow Management - Basic Orders" data-category="Orders &amp; Workflow">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Orders &amp; Workflow</div>
-          <div class="poster-title">Workflow Management - Basic Orders</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Workflow Management - Basic Orders</h3>
-        <p class="desc">Manage orders, schedules, and workflow execution across the fleet.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 23: 1173730299 -->
+        <article class="card is-playable" data-vimeo-id="1173730299">
+          <div class="poster" style="background-image: url('thumbnails/1173730299.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171945" data-title="Workflow Management - Order Features" data-category="Orders &amp; Workflow">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Orders &amp; Workflow</div>
-          <div class="poster-title">Workflow Management - Order Features</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Workflow Management - Order Features</h3>
-        <p class="desc">Manage orders, schedules, and workflow execution across the fleet.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 24: 1173730286 -->
+        <article class="card is-playable" data-vimeo-id="1173730286">
+          <div class="poster" style="background-image: url('thumbnails/1173730286.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171968" data-title="Workflow Management - Orders View" data-category="Orders &amp; Workflow">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Orders &amp; Workflow</div>
-          <div class="poster-title">Workflow Management - Orders View</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Workflow Management - Orders View</h3>
-        <p class="desc">Manage orders, schedules, and workflow execution across the fleet.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 25: 1173730264 -->
+        <article class="card is-playable" data-vimeo-id="1173730264">
+          <div class="poster" style="background-image: url('thumbnails/1173730264.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173171980" data-title="Workflow Management - Quick Tour" data-category="Orders &amp; Workflow">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Orders &amp; Workflow</div>
-          <div class="poster-title">Workflow Management - Quick Tour</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Workflow Management - Quick Tour</h3>
-        <p class="desc">Manage orders, schedules, and workflow execution across the fleet.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 26: 1173730244 -->
+        <article class="card is-playable" data-vimeo-id="1173730244">
+          <div class="poster" style="background-image: url('thumbnails/1173730244.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173172000" data-title="Workflow Management - Starting Orders" data-category="Orders &amp; Workflow">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Orders &amp; Workflow</div>
-          <div class="poster-title">Workflow Management - Starting Orders</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Workflow Management - Starting Orders</h3>
-        <p class="desc">Manage orders, schedules, and workflow execution across the fleet.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 27: 1173730236 -->
+        <article class="card is-playable" data-vimeo-id="1173730236">
+          <div class="poster" style="background-image: url('thumbnails/1173730236.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173172024" data-title="Workflow Management - Using Fleet Scheduler" data-category="Orders &amp; Workflow">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Orders &amp; Workflow</div>
-          <div class="poster-title">Workflow Management - Using Fleet Scheduler</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Workflow Management - Using Fleet Scheduler</h3>
-        <p class="desc">Manage orders, schedules, and workflow execution across the fleet.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 28: 1173730225 -->
+        <article class="card is-playable" data-vimeo-id="1173730225">
+          <div class="poster" style="background-image: url('thumbnails/1173730225.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card is-playable" data-drive-id="1173172036" data-title="Workflow Management - Workflow settings" data-category="Orders &amp; Workflow">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Orders &amp; Workflow</div>
-          <div class="poster-title">Workflow Management - Workflow settings</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status">Ready to play</p>
-        <h3>Workflow Management - Workflow settings</h3>
-        <p class="desc">Manage orders, schedules, and workflow execution across the fleet.</p>
-        <p class="actions"><span class="action">Play video</span></p>
-      </div>
-    </article>
+        <!-- Video 29: 1173730206 -->
+        <article class="card is-playable" data-vimeo-id="1173730206">
+          <div class="poster" style="background-image: url('thumbnails/1173730206.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+       
+        <!-- Video 32: 1173730082 -->
+        <article class="card is-playable" data-vimeo-id="1173730082">
+          <div class="poster" style="background-image: url('thumbnails/1173730082.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
 
-    <article class="card" data-title="Workflow Management Reduce mileage with WEBFLEET" data-category="Orders &amp; Workflow">
-      <div class="thumb placeholder">
-        <div class="poster">
-          <div class="badge">Orders &amp; Workflow</div>
-          <div class="poster-title">Workflow Management Reduce mileage with WEBFLEET</div>
-          <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-        </div>
-      </div>
-      <div class="card-body">
-        <p class="status soon">Coming soon</p>
-        <h3>Workflow Management Reduce mileage with WEBFLEET</h3>
-        <p class="desc">Manage orders, schedules, and workflow execution across the fleet.</p>
-        <p class="actions"><span class="action disabled">Not available yet</span></p>
-      </div>
-    </article>
+        <!-- Video 33: 1173730030 -->
+        <article class="card is-playable" data-vimeo-id="1173730030">
+          <div class="poster" style="background-image: url('thumbnails/1173730030.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 34: 1173730015 -->
+        <article class="card is-playable" data-vimeo-id="1173730015">
+          <div class="poster" style="background-image: url('thumbnails/1173730015.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 35: 1173729994 -->
+        <article class="card is-playable" data-vimeo-id="1173729994">
+          <div class="poster" style="background-image: url('thumbnails/1173729994.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 36: 1173729970 -->
+        <article class="card is-playable" data-vimeo-id="1173729970">
+          <div class="poster" style="background-image: url('thumbnails/1173729970.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 37: 1173729958 -->
+        <article class="card is-playable" data-vimeo-id="1173729958">
+          <div class="poster" style="background-image: url('thumbnails/1173729958.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 38: 1173729943 -->
+        <article class="card is-playable" data-vimeo-id="1173729943">
+          <div class="poster" style="background-image: url('thumbnails/1173729943.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 39: 1173729921 -->
+        <article class="card is-playable" data-vimeo-id="1173729921">
+          <div class="poster" style="background-image: url('thumbnails/1173729921.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 40: 1173729898 -->
+        <article class="card is-playable" data-vimeo-id="1173729898">
+          <div class="poster" style="background-image: url('thumbnails/1173729898.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 41: 1173729852 -->
+        <article class="card is-playable" data-vimeo-id="1173729852">
+          <div class="poster" style="background-image: url('thumbnails/1173729852.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 42: 1173729814 -->
+        <article class="card is-playable" data-vimeo-id="1173729814">
+          <div class="poster" style="background-image: url('thumbnails/1173729814.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 43: 1173729797 -->
+        <article class="card is-playable" data-vimeo-id="1173729797">
+          <div class="poster" style="background-image: url('thumbnails/1173729797.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 44: 1173729756 -->
+        <article class="card is-playable" data-vimeo-id="1173729756">
+          <div class="poster" style="background-image: url('thumbnails/1173729756.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 48: 1173729624 -->
+        <article class="card is-playable" data-vimeo-id="1173729624">
+          <div class="poster" style="background-image: url('thumbnails/1173729624.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 49: 1173729596 -->
+        <article class="card is-playable" data-vimeo-id="1173729596">
+          <div class="poster" style="background-image: url('thumbnails/1173729596.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 50: 1173729574 -->
+        <article class="card is-playable" data-vimeo-id="1173729574">
+          <div class="poster" style="background-image: url('thumbnails/1173729574.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 51: 1173729555 -->
+        <article class="card is-playable" data-vimeo-id="1173729555">
+          <div class="poster" style="background-image: url('thumbnails/1173729555.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 52: 1173729543 -->
+        <article class="card is-playable" data-vimeo-id="1173729543">
+          <div class="poster" style="background-image: url('thumbnails/1173729543.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 53: 1173729513 -->
+        <article class="card is-playable" data-vimeo-id="1173729513">
+          <div class="poster" style="background-image: url('thumbnails/1173729513.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 56: 1173729464 -->
+        <article class="card is-playable" data-vimeo-id="1173729464">
+          <div class="poster" style="background-image: url('thumbnails/1173729464.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 57: 1173729440 -->
+        <article class="card is-playable" data-vimeo-id="1173729440">
+          <div class="poster" style="background-image: url('thumbnails/1173729440.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 58: 1173729413 -->
+        <article class="card is-playable" data-vimeo-id="1173729413">
+          <div class="poster" style="background-image: url('thumbnails/1173729413.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 59: 1173729394 -->
+        <article class="card is-playable" data-vimeo-id="1173729394">
+          <div class="poster" style="background-image: url('thumbnails/1173729394.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 60: 1173729375 -->
+        <article class="card is-playable" data-vimeo-id="1173729375">
+          <div class="poster" style="background-image: url('thumbnails/1173729375.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 61: 1173729339 -->
+        <article class="card is-playable" data-vimeo-id="1173729339">
+          <div class="poster" style="background-image: url('thumbnails/1173729339.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 62: 1173729315 -->
+        <article class="card is-playable" data-vimeo-id="1173729315">
+          <div class="poster" style="background-image: url('thumbnails/1173729315.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 63: 1173729293 -->
+        <article class="card is-playable" data-vimeo-id="1173729293">
+          <div class="poster" style="background-image: url('thumbnails/1173729293.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 64: 1173729259 -->
+        <article class="card is-playable" data-vimeo-id="1173729259">
+          <div class="poster" style="background-image: url('thumbnails/1173729259.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 65: 1173729223 -->
+        <article class="card is-playable" data-vimeo-id="1173729223">
+          <div class="poster" style="background-image: url('thumbnails/1173729223.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
+        <!-- Video 66: 1173729174 -->
+        <article class="card is-playable" data-vimeo-id="1173729174">
+          <div class="poster" style="background-image: url('thumbnails/1173729174.jpg');">
+            <img class="poster-logo" src="directtrack-logo.gif" alt="" aria-hidden="true">
+          </div>
+          <div class="card-body">
+            <p class="actions"><span class="action">Play video</span></p>
+          </div>
+        </article>
+
       </div>
     </section>
   </main>
 
   <div id="videoModal" class="modal" aria-hidden="true">
     <div class="modal-backdrop" data-close="true"></div>
-    <div class="modal-dialog" role="dialog" aria-modal="true" aria-label="Video player">
-      <button class="modal-close" type="button" aria-label="Close video" data-close="true">Ã—</button>
+    <div class="modal-dialog">
+      <button class="modal-close" type="button" data-close="true">×</button>
       <div class="modal-frame">
-        <iframe
-          id="vimeoPlayer"
-          src=""
-          frameborder="0"
-          allow="autoplay; fullscreen; picture-in-picture"
-          allowfullscreen
-          title="Training video player"></iframe>
+        <iframe id="vimeoPlayer" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
       </div>
     </div>
   </div>
 
-<script>
-(async function () {
-  try {
-    const res = await fetch("data/drive-videos.json", { cache: "no-store" });
-    if (!res.ok) {
-      document.body.insertAdjacentHTML("afterbegin", `<div style="padding:12px;background:#b00020;color:#fff;font-family:system-ui">FAILED to load data/drive-videos.json (${res.status})</div>`);
-      return;
+  <script>
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('vimeoPlayer');
+    const closeButtons = document.querySelectorAll('[data-close="true"]');
+
+    function openModal(vimeoId) {
+      if (!vimeoId) return;
+      iframe.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&badge=0&byline=0&portrait=0&title=0`;
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
     }
-    const lib = await res.json();
-    const videos = Array.isArray(lib.videos) ? lib.videos : [];
 
-    document.body.insertAdjacentHTML("afterbegin", `<div style="padding:12px;background:#0b5;color:#fff;font-family:system-ui">LOADED ${videos.length} Drive videos</div>`);
+    function closeModal() {
+      iframe.src = '';
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
 
-    const grids = Array.from(document.querySelectorAll(".grid"));
-    if (!grids.length) return;
+    document.querySelectorAll('.card.is-playable').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.action')) return;
+        const vimeoId = card.dataset.vimeoId;
+        if (vimeoId) openModal(vimeoId);
+      });
 
-    // Put everything into the first grid; clear others
-    grids.forEach((g, i) => { if (i !== 0) g.innerHTML = ""; });
+      const playBtn = card.querySelector('.action');
+      if (playBtn) {
+        playBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const vimeoId = card.dataset.vimeoId;
+          if (vimeoId) openModal(vimeoId);
+        });
+      }
+    });
 
-    const grid = grids[0];
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', closeModal);
+    });
 
-    const cardHtml = (v) => `
-<article class="card is-playable" data-drive-id="${v.id}" data-title="${(v.title||"").replaceAll('"',"&quot;")}" data-category="${v.category||"Uncategorized"}">
-  <div class="thumb placeholder">
-    <div class="poster" style="background-image: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.55)), url('${v.thumb_url}'); background-size: cover; background-position: center;">
-      <div class="badge">${v.category || "Uncategorized"}</div>
-      <div class="poster-title">${v.title || ""}</div>
-      <img class="poster-logo" src="/Webfleet-Training-Academy/directtrack-logo.gif" alt="" aria-hidden="true">
-    </div>
-  </div>
-  <div class="card-body">
-    <p class="status">Ready to play</p>
-    <h3>${v.title || ""}</h3>
-    <p class="desc"></p>
-    <p class="actions"><span class="action">Play video</span></p>
-  </div>
-</article>`;
-
-    grid.innerHTML = videos.map(cardHtml).join("\n");
-  } catch (e) {
-    document.body.insertAdjacentHTML("afterbegin", `<div style="padding:12px;background:#b00020;color:#fff;font-family:system-ui">ERROR: ${String(e)}</div>`);
-  }
-})();
-</script>
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal();
+      }
+    });
+  </script>
 </body>
 </html>
-
-
-
-
-
