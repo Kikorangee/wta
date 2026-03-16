@@ -1,0 +1,599 @@
+﻿{
+    "total":  66,
+    "videos":  [
+                   {
+                       "drive_id":  "1173171576",
+                       "vimeo_id":  "1173730849",
+                       "title":  "Workflow Management - Webfleet Solutions UKI_final",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730849.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730849"
+                   },
+                   {
+                       "drive_id":  "1173172012",
+                       "vimeo_id":  "1173730833",
+                       "title":  "Workflow Management - Starting Orders",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730833.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730833"
+                   },
+                   {
+                       "drive_id":  "1173171367",
+                       "vimeo_id":  "1173730808",
+                       "title":  "Workflow Management - Schedule Review \u0026 Optimisation",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730808.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730808"
+                   },
+                   {
+                       "drive_id":  "1173171868",
+                       "vimeo_id":  "1173730795",
+                       "title":  "Workflow Management - Quick Tour",
+                       "description":  null,
+                       "thumb_url":  "https://i.vimeocdn.com/video/2134131301-30f6f10d5cfac68601732b0d59b66ba1ac5854dc1c093bc4c7ddd5c2fae3a205-d_1920x1080?\u0026r=pad\u0026region=us",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730795"
+                   },
+                   {
+                       "drive_id":  "1173171876",
+                       "vimeo_id":  "1173730759",
+                       "title":  "Workflow Management - Orders View",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730759.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730759"
+                   },
+                   {
+                       "drive_id":  "1173171606",
+                       "vimeo_id":  "1173730743",
+                       "title":  "Workflow Management - Order NotifIfication",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730743.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730743"
+                   },
+                   {
+                       "drive_id":  "1173171683",
+                       "vimeo_id":  "1173730729",
+                       "title":  "Workflow Management - Order Features",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730729.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730729"
+                   },
+                   {
+                       "drive_id":  "1173171717",
+                       "vimeo_id":  "1173730712",
+                       "title":  "Workflow Management - Introduction to Orders",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730712.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730712"
+                   },
+                   {
+                       "drive_id":  "1173171858",
+                       "vimeo_id":  "1173730696",
+                       "title":  "Workflow Management - Importing Orders",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730696.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730696"
+                   },
+                   {
+                       "drive_id":  "1173171695",
+                       "vimeo_id":  "1173730689",
+                       "title":  "Workflow Management - Fleet Scheduler",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730689.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730689"
+                   },
+                   {
+                       "drive_id":  "1173171734",
+                       "vimeo_id":  "1173730676",
+                       "title":  "Workflow Management - ePOD",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730676.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730676"
+                   },
+                   {
+                       "drive_id":  "1173171747",
+                       "vimeo_id":  "1173730662",
+                       "title":  "Workflow Management - Creating Order Schedules",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730662.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730662"
+                   },
+                   {
+                       "drive_id":  "1173171832",
+                       "vimeo_id":  "1173730642",
+                       "title":  "Workflow Management - Basic Orders",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730642.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730642"
+                   },
+                   {
+                       "drive_id":  "1173171461",
+                       "vimeo_id":  "1173730596",
+                       "title":  "Work App product showcase",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730596.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730596"
+                   },
+                   {
+                       "drive_id":  "1173171777",
+                       "vimeo_id":  "1173730565",
+                       "title":  "Webfleet video telematicsï¼ Boost fleet safety with AI-powered cameras",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730565.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730565"
+                   },
+                   {
+                       "drive_id":  "1173171784",
+                       "vimeo_id":  "1173730542",
+                       "title":  "Intelligent fleet protection through video telematics",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730542.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730542"
+                   },
+                   {
+                       "drive_id":  "1173171799",
+                       "vimeo_id":  "1173730518",
+                       "title":  "Webfleet Tyre Pressure Monitoring System (TPMS)  - Installation overview",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730518.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730518"
+                   },
+                   {
+                       "drive_id":  "1173171840",
+                       "vimeo_id":  "1173730503",
+                       "title":  "Webfleet Reports",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730503.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730503"
+                   },
+                   {
+                       "drive_id":  "1173171894",
+                       "vimeo_id":  "1173730487",
+                       "title":  "Webfleet Overview",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730487.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730487"
+                   },
+                   {
+                       "drive_id":  "1173171945",
+                       "vimeo_id":  "1173730409",
+                       "title":  "Webfleet digital logbook for business mileage claims_final",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730409.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730409"
+                   },
+                   {
+                       "drive_id":  "1173171968",
+                       "vimeo_id":  "1173730347",
+                       "title":  "Webfleet Australiaï¼ Superior Traffic Management Improves Fleet Efficiency and Safety",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730347.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730347"
+                   },
+                   {
+                       "drive_id":  "1173171980",
+                       "vimeo_id":  "1173730314",
+                       "title":  "Vehicle Tracking",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730314.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730314"
+                   },
+                   {
+                       "drive_id":  "1173172000",
+                       "vimeo_id":  "1173730299",
+                       "title":  "The Webfleet Partner Ecosystem",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730299.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730299"
+                   },
+                   {
+                       "drive_id":  "1173172024",
+                       "vimeo_id":  "1173730286",
+                       "title":  "The Dashboard",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730286.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730286"
+                   },
+                   {
+                       "drive_id":  "1173172036",
+                       "vimeo_id":  "1173730264",
+                       "title":  "Streamline your mobile workforce with the Webfleet Work App",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730264.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730264"
+                   },
+                   {
+                       "drive_id":  "1173172100",
+                       "vimeo_id":  "1173730244",
+                       "title":  "Speed Configuration",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730244.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730244"
+                   },
+                   {
+                       "drive_id":  "1173172101",
+                       "vimeo_id":  "1173730236",
+                       "title":  "Service Module Introduction",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730236.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730236"
+                   },
+                   {
+                       "drive_id":  "1173172102",
+                       "vimeo_id":  "1173730225",
+                       "title":  "Service Module Advanced",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730225.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730225"
+                   },
+                   {
+                       "drive_id":  "1173172103",
+                       "vimeo_id":  "1173730206",
+                       "title":  "Self-Service Administration",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730206.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730206"
+                   },
+                   {
+                       "drive_id":  "1173172104",
+                       "vimeo_id":  "1173730176",
+                       "title":  "Safer Fleetsï¼ Track and Trace in COVID 19",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730176.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730176"
+                   },
+                   {
+                       "drive_id":  "1173172105",
+                       "vimeo_id":  "1173730147",
+                       "title":  "Safer Fleetsï¼ Track and Trace in COVID 19 hotspot areas ï½ Webfleet Solutions [AUâ§¸NZ]",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730147.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730147"
+                   },
+                   {
+                       "drive_id":  "1173172106",
+                       "vimeo_id":  "1173730082",
+                       "title":  "Revolutionising Field Service Operationsï¼ Digital Fleet Management",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730082.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730082"
+                   },
+                   {
+                       "drive_id":  "1173172107",
+                       "vimeo_id":  "1173730030",
+                       "title":  "Revolutionising Field Service Operationsï¼ Digital Fleet Management with Webfleet \u0026 Fast Lean Smart",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730030.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730030"
+                   },
+                   {
+                       "drive_id":  "1173172108",
+                       "vimeo_id":  "1173730015",
+                       "title":  "Product Dive ï½ Webfleet Smart Notifications â A Quick 2-Minute Overview",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730015.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173730015"
+                   },
+                   {
+                       "drive_id":  "1173172109",
+                       "vimeo_id":  "1173729994",
+                       "title":  "Product Dive ï½ Smarter EV Fleet Management with Webfleet",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729994.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729994"
+                   },
+                   {
+                       "drive_id":  "1173172110",
+                       "vimeo_id":  "1173729970",
+                       "title":  "Product Dive ï½ See the Full Picture with Webfleet Video Telematics_final",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729970.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729970"
+                   },
+                   {
+                       "drive_id":  "1173172111",
+                       "vimeo_id":  "1173729958",
+                       "title":  "Product Dive ï½ Plan Your EV Switch with Webfleet EV Transition Tool_final",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729958.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729958"
+                   },
+                   {
+                       "drive_id":  "1173172112",
+                       "vimeo_id":  "1173729943",
+                       "title":  "Product Dive ï½ Monitor Fuel Use with Webfleet Fuel Monitoring",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729943.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729943"
+                   },
+                   {
+                       "drive_id":  "1173172113",
+                       "vimeo_id":  "1173729921",
+                       "title":  "Product Dive ï½ Empower Your Drivers with Webfleet AI Fleet Advisorl",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729921.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729921"
+                   },
+                   {
+                       "drive_id":  "1173172114",
+                       "vimeo_id":  "1173729898",
+                       "title":  "Product Dive ï½ Drive Smarter with Webfleet OptiDrive 360_final",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729898.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729898"
+                   },
+                   {
+                       "drive_id":  "1173172115",
+                       "vimeo_id":  "1173729852",
+                       "title":  "Otidrive 360 Driver Ter5minal",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729852.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729852"
+                   },
+                   {
+                       "drive_id":  "1173172116",
+                       "vimeo_id":  "1173729814",
+                       "title":  "Optidrive 360",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729814.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729814"
+                   },
+                   {
+                       "drive_id":  "1173172117",
+                       "vimeo_id":  "1173729797",
+                       "title":  "WEBFLEET ï½Connected Car",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729797.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729797"
+                   },
+                   {
+                       "drive_id":  "1173172118",
+                       "vimeo_id":  "1173729756",
+                       "title":  "logbook",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729756.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729756"
+                   },
+                   {
+                       "drive_id":  "1173172119",
+                       "vimeo_id":  "1173729717",
+                       "title":  "How to add EVs to your commercial fleet ï½ Fleet Technology",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729717.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729717"
+                   },
+                   {
+                       "drive_id":  "1173172120",
+                       "vimeo_id":  "1173729703",
+                       "title":  "Highlightï¼ How to add EVs to your commercial fleet",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729703.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729703"
+                   },
+                   {
+                       "drive_id":  "1173172121",
+                       "vimeo_id":  "1173729661",
+                       "title":  "Heavy Commercial Vehicle (HCVâ§¸HGV) fleet management",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729661.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729661"
+                   },
+                   {
+                       "drive_id":  "1173172122",
+                       "vimeo_id":  "1173729624",
+                       "title":  "Green \u0026 Safe driving",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729624.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729624"
+                   },
+                   {
+                       "drive_id":  "1173172123",
+                       "vimeo_id":  "1173729596",
+                       "title":  "Fleet Optimisation",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729596.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729596"
+                   },
+                   {
+                       "drive_id":  "1173172124",
+                       "vimeo_id":  "1173729574",
+                       "title":  "EV Management",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729574.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729574"
+                   },
+                   {
+                       "drive_id":  "1173172125",
+                       "vimeo_id":  "1173729555",
+                       "title":  "Easy Trip administration with digital mileage Log book",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729555.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729555"
+                   },
+                   {
+                       "drive_id":  "1173172126",
+                       "vimeo_id":  "1173729543",
+                       "title":  "Driver Terminal Configuration",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729543.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729543"
+                   },
+                   {
+                       "drive_id":  "1173172127",
+                       "vimeo_id":  "1173729513",
+                       "title":  "Device Configuration",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729513.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729513"
+                   },
+                   {
+                       "drive_id":  "1173172128",
+                       "vimeo_id":  "1173729498",
+                       "title":  "Day in the life of an electric van driver. Are you a Kevin or a Kay?",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729498.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729498"
+                   },
+                   {
+                       "drive_id":  "1173172129",
+                       "vimeo_id":  "1173729482",
+                       "title":  "Day in the life of a van driver. Are you a Kevin or Kayï¼_final",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729482.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729482"
+                   },
+                   {
+                       "drive_id":  "1173172130",
+                       "vimeo_id":  "1173729464",
+                       "title":  "Creating Reports",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729464.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729464"
+                   },
+                   {
+                       "drive_id":  "1173172131",
+                       "vimeo_id":  "1173729440",
+                       "title":  "Creating Areas",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729440.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729440"
+                   },
+                   {
+                       "drive_id":  "1173172132",
+                       "vimeo_id":  "1173729413",
+                       "title":  "Could you be working Better Together with your drivers?",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729413.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729413"
+                   },
+                   {
+                       "drive_id":  "1173172133",
+                       "vimeo_id":  "1173729394",
+                       "title":  "Configuring Work App",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729394.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729394"
+                   },
+                   {
+                       "drive_id":  "1173172134",
+                       "vimeo_id":  "1173729375",
+                       "title":  "Cold Chain ï¼ How WEBFLEET connect delivers integrated solutions for the cold chain industry_final",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729375.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729375"
+                   },
+                   {
+                       "drive_id":  "1173172135",
+                       "vimeo_id":  "1173729339",
+                       "title":  "CO2 Emmissions Reporting",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729339.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729339"
+                   },
+                   {
+                       "drive_id":  "1173172136",
+                       "vimeo_id":  "1173729315",
+                       "title":  "Asset Tracking",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729315.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729315"
+                   },
+                   {
+                       "drive_id":  "1173172137",
+                       "vimeo_id":  "1173729293",
+                       "title":  "Advanced Reporting",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729293.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729293"
+                   },
+                   {
+                       "drive_id":  "1173172138",
+                       "vimeo_id":  "1173729259",
+                       "title":  "Adding Users",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729259.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729259"
+                   },
+                   {
+                       "drive_id":  "1173172139",
+                       "vimeo_id":  "1173729223",
+                       "title":  "25 years of Webfleet!",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729223.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729223"
+                   },
+                   {
+                       "drive_id":  "1173172140",
+                       "vimeo_id":  "1173729174",
+                       "title":  "Market-leading fleet management system",
+                       "description":  null,
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729174.jpg",
+                       "category":  "Training",
+                       "vimeo_url":  "https://vimeo.com/1173729174"
+                   }
+               ]
+}

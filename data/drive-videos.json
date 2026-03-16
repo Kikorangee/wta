@@ -1,0 +1,533 @@
+﻿{
+    "total":  66,
+    "videos":  [
+                   {
+                       "id":  "1173730849",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171576",
+                       "title":  "Workflow Management - Webfleet Solutions UKI_final",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730849.jpg"
+                   },
+                   {
+                       "id":  "1173730833",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172012",
+                       "title":  "Workflow Management - Starting Orders",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730833.jpg"
+                   },
+                   {
+                       "id":  "1173730808",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171367",
+                       "title":  "Workflow Management - Schedule Review \u0026 Optimisation",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730808.jpg"
+                   },
+                   {
+                       "id":  "1173730795",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171868",
+                       "title":  "Workflow Management - Quick Tour",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730795.jpg"
+                   },
+                   {
+                       "id":  "1173730759",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171876",
+                       "title":  "Workflow Management - Orders View",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730759.jpg"
+                   },
+                   {
+                       "id":  "1173730743",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171606",
+                       "title":  "Workflow Management - Order NotifIfication",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730743.jpg"
+                   },
+                   {
+                       "id":  "1173730729",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171683",
+                       "title":  "Workflow Management - Order Features",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730729.jpg"
+                   },
+                   {
+                       "id":  "1173730712",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171717",
+                       "title":  "Workflow Management - Introduction to Orders",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730712.jpg"
+                   },
+                   {
+                       "id":  "1173730696",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171858",
+                       "title":  "Workflow Management - Importing Orders",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730696.jpg"
+                   },
+                   {
+                       "id":  "1173730689",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171695",
+                       "title":  "Workflow Management - Fleet Scheduler",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730689.jpg"
+                   },
+                   {
+                       "id":  "1173730676",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171734",
+                       "title":  "Workflow Management - ePOD",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730676.jpg"
+                   },
+                   {
+                       "id":  "1173730662",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171747",
+                       "title":  "Workflow Management - Creating Order Schedules",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730662.jpg"
+                   },
+                   {
+                       "id":  "1173730642",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171832",
+                       "title":  "Workflow Management - Basic Orders",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730642.jpg"
+                   },
+                   {
+                       "id":  "1173730596",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171461",
+                       "title":  "Work App product showcase",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730596.jpg"
+                   },
+                   {
+                       "id":  "1173730565",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171777",
+                       "title":  "Webfleet video telematicsï¼ Boost fleet safety with AI-powered cameras",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730565.jpg"
+                   },
+                   {
+                       "id":  "1173730542",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171784",
+                       "title":  "Intelligent fleet protection through video telematics",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730542.jpg"
+                   },
+                   {
+                       "id":  "1173730518",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171799",
+                       "title":  "Webfleet Tyre Pressure Monitoring System (TPMS)  - Installation overview",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730518.jpg"
+                   },
+                   {
+                       "id":  "1173730503",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171840",
+                       "title":  "Webfleet Reports",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730503.jpg"
+                   },
+                   {
+                       "id":  "1173730487",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171894",
+                       "title":  "Webfleet Overview",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730487.jpg"
+                   },
+                   {
+                       "id":  "1173730409",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171945",
+                       "title":  "Webfleet digital logbook for business mileage claims_final",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730409.jpg"
+                   },
+                   {
+                       "id":  "1173730347",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171968",
+                       "title":  "Webfleet Australiaï¼ Superior Traffic Management Improves Fleet Efficiency and Safety",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730347.jpg"
+                   },
+                   {
+                       "id":  "1173730314",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173171980",
+                       "title":  "Vehicle Tracking",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730314.jpg"
+                   },
+                   {
+                       "id":  "1173730299",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172000",
+                       "title":  "The Webfleet Partner Ecosystem",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730299.jpg"
+                   },
+                   {
+                       "id":  "1173730286",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172024",
+                       "title":  "The Dashboard",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730286.jpg"
+                   },
+                   {
+                       "id":  "1173730264",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172036",
+                       "title":  "Streamline your mobile workforce with the Webfleet Work App",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730264.jpg"
+                   },
+                   {
+                       "id":  "1173730244",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172100",
+                       "title":  "Speed Configuration",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730244.jpg"
+                   },
+                   {
+                       "id":  "1173730236",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172101",
+                       "title":  "Service Module Introduction",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730236.jpg"
+                   },
+                   {
+                       "id":  "1173730225",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172102",
+                       "title":  "Service Module Advanced",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730225.jpg"
+                   },
+                   {
+                       "id":  "1173730206",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172103",
+                       "title":  "Self-Service Administration",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730206.jpg"
+                   },
+                   {
+                       "id":  "1173730176",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172104",
+                       "title":  "Safer Fleetsï¼ Track and Trace in COVID 19",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730176.jpg"
+                   },
+                   {
+                       "id":  "1173730147",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172105",
+                       "title":  "Safer Fleetsï¼ Track and Trace in COVID 19 hotspot areas ï½ Webfleet Solutions [AUâ§¸NZ]",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730147.jpg"
+                   },
+                   {
+                       "id":  "1173730082",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172106",
+                       "title":  "Revolutionising Field Service Operationsï¼ Digital Fleet Management",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730082.jpg"
+                   },
+                   {
+                       "id":  "1173730030",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172107",
+                       "title":  "Revolutionising Field Service Operationsï¼ Digital Fleet Management with Webfleet \u0026 Fast Lean Smart",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730030.jpg"
+                   },
+                   {
+                       "id":  "1173730015",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172108",
+                       "title":  "Product Dive ï½ Webfleet Smart Notifications â A Quick 2-Minute Overview",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173730015.jpg"
+                   },
+                   {
+                       "id":  "1173729994",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172109",
+                       "title":  "Product Dive ï½ Smarter EV Fleet Management with Webfleet",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729994.jpg"
+                   },
+                   {
+                       "id":  "1173729970",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172110",
+                       "title":  "Product Dive ï½ See the Full Picture with Webfleet Video Telematics_final",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729970.jpg"
+                   },
+                   {
+                       "id":  "1173729958",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172111",
+                       "title":  "Product Dive ï½ Plan Your EV Switch with Webfleet EV Transition Tool_final",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729958.jpg"
+                   },
+                   {
+                       "id":  "1173729943",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172112",
+                       "title":  "Product Dive ï½ Monitor Fuel Use with Webfleet Fuel Monitoring",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729943.jpg"
+                   },
+                   {
+                       "id":  "1173729921",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172113",
+                       "title":  "Product Dive ï½ Empower Your Drivers with Webfleet AI Fleet Advisorl",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729921.jpg"
+                   },
+                   {
+                       "id":  "1173729898",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172114",
+                       "title":  "Product Dive ï½ Drive Smarter with Webfleet OptiDrive 360_final",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729898.jpg"
+                   },
+                   {
+                       "id":  "1173729852",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172115",
+                       "title":  "Otidrive 360 Driver Ter5minal",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729852.jpg"
+                   },
+                   {
+                       "id":  "1173729814",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172116",
+                       "title":  "Optidrive 360",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729814.jpg"
+                   },
+                   {
+                       "id":  "1173729797",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172117",
+                       "title":  "WEBFLEET ï½Connected Car",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729797.jpg"
+                   },
+                   {
+                       "id":  "1173729756",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172118",
+                       "title":  "logbook",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729756.jpg"
+                   },
+                   {
+                       "id":  "1173729717",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172119",
+                       "title":  "How to add EVs to your commercial fleet ï½ Fleet Technology",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729717.jpg"
+                   },
+                   {
+                       "id":  "1173729703",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172120",
+                       "title":  "Highlightï¼ How to add EVs to your commercial fleet",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729703.jpg"
+                   },
+                   {
+                       "id":  "1173729661",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172121",
+                       "title":  "Heavy Commercial Vehicle (HCVâ§¸HGV) fleet management",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729661.jpg"
+                   },
+                   {
+                       "id":  "1173729624",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172122",
+                       "title":  "Green \u0026 Safe driving",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729624.jpg"
+                   },
+                   {
+                       "id":  "1173729596",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172123",
+                       "title":  "Fleet Optimisation",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729596.jpg"
+                   },
+                   {
+                       "id":  "1173729574",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172124",
+                       "title":  "EV Management",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729574.jpg"
+                   },
+                   {
+                       "id":  "1173729555",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172125",
+                       "title":  "Easy Trip administration with digital mileage Log book",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729555.jpg"
+                   },
+                   {
+                       "id":  "1173729543",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172126",
+                       "title":  "Driver Terminal Configuration",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729543.jpg"
+                   },
+                   {
+                       "id":  "1173729513",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172127",
+                       "title":  "Device Configuration",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729513.jpg"
+                   },
+                   {
+                       "id":  "1173729498",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172128",
+                       "title":  "Day in the life of an electric van driver. Are you a Kevin or a Kay?",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729498.jpg"
+                   },
+                   {
+                       "id":  "1173729482",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172129",
+                       "title":  "Day in the life of a van driver. Are you a Kevin or Kayï¼_final",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729482.jpg"
+                   },
+                   {
+                       "id":  "1173729464",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172130",
+                       "title":  "Creating Reports",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729464.jpg"
+                   },
+                   {
+                       "id":  "1173729440",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172131",
+                       "title":  "Creating Areas",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729440.jpg"
+                   },
+                   {
+                       "id":  "1173729413",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172132",
+                       "title":  "Could you be working Better Together with your drivers?",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729413.jpg"
+                   },
+                   {
+                       "id":  "1173729394",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172133",
+                       "title":  "Configuring Work App",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729394.jpg"
+                   },
+                   {
+                       "id":  "1173729375",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172134",
+                       "title":  "Cold Chain ï¼ How WEBFLEET connect delivers integrated solutions for the cold chain industry_final",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729375.jpg"
+                   },
+                   {
+                       "id":  "1173729339",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172135",
+                       "title":  "CO2 Emmissions Reporting",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729339.jpg"
+                   },
+                   {
+                       "id":  "1173729315",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172136",
+                       "title":  "Asset Tracking",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729315.jpg"
+                   },
+                   {
+                       "id":  "1173729293",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172137",
+                       "title":  "Advanced Reporting",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729293.jpg"
+                   },
+                   {
+                       "id":  "1173729259",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172138",
+                       "title":  "Adding Users",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729259.jpg"
+                   },
+                   {
+                       "id":  "1173729223",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172139",
+                       "title":  "25 years of Webfleet!",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729223.jpg"
+                   },
+                   {
+                       "id":  "1173729174",
+                       "description":  null,
+                       "category":  "Training",
+                       "drive_id":  "1173172140",
+                       "title":  "Market-leading fleet management system",
+                       "thumb_url":  "/Webfleet-Training-Academy/thumbnails/1173729174.jpg"
+                   }
+               ]
+}
