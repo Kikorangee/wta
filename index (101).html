@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Webfleet Training Hub</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap');
+:root { --bg:#0d0d10; --panel:rgba(18,18,22,0.92); --line:rgba(148,163,184,0.1); --text:#e2e8f0; --muted:#8892a4; --accent:#38bdf8; --accent2:#818cf8; --red:#ef4444; --sidebar-bg:#4d5b67; --card-gap:8px; --card-w:180px; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+
+/* Animated gradient mesh bg */
+body::before { content:''; position:fixed; inset:0; z-index:-1; background:
+  radial-gradient(ellipse 80% 60% at 15% 50%, rgba(56,189,248,0.04) 0%, transparent 60%),
+  radial-gradient(ellipse 60% 80% at 85% 20%, rgba(129,140,248,0.04) 0%, transparent 60%),
+  radial-gradient(ellipse 70% 50% at 50% 90%, rgba(16,185,129,0.03) 0%, transparent 60%);
+  pointer-events:none; animation:meshDrift 20s ease-in-out infinite alternate; }
+@keyframes meshDrift { 0% { opacity:1; } 100% { opacity:0.6; } }
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar { width:240px; background:var(--sidebar-bg); backdrop-filter:none; -webkit-backdrop-filter:none; border-right:1px solid rgba(255,255,255,0.08); padding:24px 16px; height:100vh; position:fixed; overflow-y:auto; overflow-x:hidden; z-index:100; transition:width 0.35s cubic-bezier(0.4,0,0.2,1); scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.08) transparent; }
+.sidebar::-webkit-scrollbar { width:4px; }
+.sidebar::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.08); border-radius:4px; }
+.sidebar h2 { display:none; }
+.sidebar > p { display:none; }
+.sidebar-brand { display:block; width:140px; margin:0 0 16px; transition:all 0.3s; }
+.sidebar-brand::before { content:''; display:block; width:140px; aspect-ratio:2000 / 290; background:url('direct-track-logo-transparent.png') center/contain no-repeat; }
+.sidebar-brand img { display:none !important; }
+.sidebar-subhead { margin:16px 0 8px; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#fff; font-weight:800; }
+.links { margin-top:12px; padding-top:12px; border-top:1px solid var(--line); }
+
+/* Collapse */
+.sidebar.collapsed { width:60px; padding:16px 8px; }
+.sidebar.collapsed .sidebar-brand, .sidebar.collapsed .sidebar-subhead,
+.sidebar.collapsed .cat-label, .sidebar.collapsed .cat-count,
+.sidebar.collapsed .links > a[href="#"]:not(.collapse-btn) { opacity:0; pointer-events:none; max-height:0; overflow:hidden; }
+.sidebar.collapsed .collapse-btn span { display:none; }
+.sidebar.collapsed .collapse-btn svg { transform:rotate(180deg); }
+.sidebar.collapsed a { justify-content:center; padding:8px 4px; }
+body.sb-collapsed .main { margin-left:76px; width:calc(100% - 76px); }
+
+.collapse-btn { cursor:pointer; display:flex; align-items:center; gap:8px; margin:0 0 16px; color:#fff; font-size:12px; font-weight:700; padding:7px 10px; border-radius:8px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); transition:all 0.2s; width:100%; text-align:left; }
+.collapse-btn:hover { background:rgba(255,255,255,0.12); color:#fff; border-color:rgba(255,255,255,0.28); }
+.collapse-btn svg { flex-shrink:0; width:16px; height:16px; transition:transform 0.3s; }
+
+/* Sidebar links */
+.sidebar a { display:flex; align-items:center; gap:8px; margin:2px 0; color:#f8fafc; text-decoration:none; font-size:12.5px; font-weight:700; padding:7px 10px; border-radius:8px; transition:all 0.2s ease; line-height:1.3; border:1px solid transparent; }
+.sidebar a:hover { background:rgba(255,255,255,0.08); color:#fff; border-color:rgba(255,255,255,0.16); }
+.sidebar a.active { background:rgba(255,255,255,0.12); color:#fff; border-color:rgba(255,255,255,0.22); }
+.sidebar a .cat-icon { flex-shrink:0; width:16px; height:16px; opacity:0.7; transition:opacity 0.2s; }
+.sidebar a:hover .cat-icon, .sidebar a.active .cat-icon { opacity:1; }
+.sidebar a .cat-label { flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:opacity 0.3s; font-weight:700; }
+.sidebar a .cat-count { color:#fff; font-size:10px; font-weight:800; background:rgba(255,255,255,0.12); padding:2px 7px; border-radius:10px; transition:opacity 0.3s; flex-shrink:0; }
+
+/* ── MAIN ────────────────────────────────────────────────── */
+.main { margin-left:256px; width:calc(100% - 256px); padding:0; transition:margin-left 0.35s cubic-bezier(0.4,0,0.2,1), width 0.35s ease; min-height:100vh; }
+.main-inner { padding:24px 32px 60px; }
+@media (max-width:768px) { .main-inner { padding:16px; } }
+
+.header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:6px; }
+h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
+.intro { color:var(--muted); max-width:840px; line-height:1.55; font-size:14px; margin-bottom:4px; }
+
+/* ── HERO BANNER ─────────────────────────────────────────── */
+.hero { position:relative; width:100%; height:340px; overflow:hidden; border-radius:0 0 20px 20px; margin-bottom:24px; }
+.hero-slide { position:absolute; inset:0; opacity:0; transition:opacity 0.8s ease; background-size:cover; background-position:center; }
+.hero-slide.active { opacity:1; }
+.hero-gradient { position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,16,0.1) 0%, rgba(13,13,16,0.6) 50%, var(--bg) 100%); }
+.hero-content { position:absolute; bottom:40px; left:40px; right:40px; z-index:2; }
+.hero-eyebrow { font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:8px; }
+.hero-title { font-size:36px; font-weight:700; letter-spacing:-0.02em; line-height:1.1; margin-bottom:8px; }
+.hero-desc { font-size:14px; color:var(--muted); max-width:500px; line-height:1.5; margin-bottom:16px; }
+.hero-btn { display:inline-flex; align-items:center; gap:8px; padding:10px 24px; border-radius:10px; background:var(--accent); color:#000; font-weight:700; font-size:14px; border:none; cursor:pointer; transition:all 0.2s; text-decoration:none; }
+.hero-btn:hover { background:#7dd3fc; transform:translateY(-1px); box-shadow:0 8px 24px rgba(56,189,248,0.3); }
+.hero-dots { position:absolute; bottom:16px; right:40px; display:flex; gap:6px; z-index:3; }
+.hero-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.25); cursor:pointer; transition:all 0.3s; border:none; }
+.hero-dot.active { background:var(--accent); width:24px; border-radius:4px; }
+
+/* ── SEARCH ──────────────────────────────────────────────── */
+.search-wrap { position:relative; max-width:400px; margin-bottom:24px; }
+.search-wrap input { width:100%; padding:10px 14px 10px 40px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,0.03); color:#fff; font-size:14px; font-family:inherit; outline:none; transition:all 0.25s; }
+.search-wrap input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(56,189,248,0.12); background:rgba(255,255,255,0.05); }
+.search-wrap input::placeholder { color:rgba(136,146,164,0.6); }
+.search-wrap .search-icon { position:absolute; left:12px; top:50%; transform:translateY(-50%); width:18px; height:18px; color:var(--muted); pointer-events:none; }
+
+/* ── GENRE PILLS ─────────────────────────────────────────── */
+.genre-bar { display:flex; gap:8px; overflow-x:auto; padding:4px 0 16px; scrollbar-width:none; margin-bottom:8px; }
+.genre-bar::-webkit-scrollbar { display:none; }
+.genre-pill { white-space:nowrap; padding:6px 16px; border-radius:20px; border:1px solid var(--line); background:rgba(255,255,255,0.03); color:var(--muted); font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; flex-shrink:0; }
+.genre-pill:hover, .genre-pill.active { background:rgba(56,189,248,0.12); color:var(--accent); border-color:rgba(56,189,248,0.25); }
+
+/* ── SECTIONS & ROWS ─────────────────────────────────────── */
+  .section { margin:0 0 32px; opacity:1; transform:none; }
+.section-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; padding:0 32px; }
+@media (max-width:768px) { .section-head { padding:0 16px; } }
+.section-head h2 { font-size:18px; font-weight:700; letter-spacing:-0.01em; }
+.section-head h2::before { content:''; display:inline-block; width:3px; height:16px; background:var(--accent); border-radius:2px; margin-right:8px; vertical-align:middle; }
+.section-head p { color:var(--muted); font-size:12px; }
+.section-head .see-all { color:var(--accent); font-size:12px; font-weight:600; text-decoration:none; opacity:0; transition:opacity 0.2s; }
+.section:hover .see-all { opacity:1; }
+
+.grid { display:none !important; }
+
+/* Row container */
+.row-container { position:relative; }
+.row-scroll { display:flex; gap:var(--card-gap); overflow-x:auto; scroll-behavior:smooth; padding:0 32px 20px; scrollbar-width:none; -ms-overflow-style:none; }
+.row-scroll::-webkit-scrollbar { display:none; }
+@media (max-width:768px) { .row-scroll { padding:0 16px 16px; gap:8px; } }
+
+/* Row arrows */
+.row-arrow { position:absolute; top:0; bottom:20px; width:48px; display:flex; align-items:center; justify-content:center; z-index:5; cursor:pointer; opacity:0; transition:opacity 0.3s; border:none; }
+.row-arrow.left { left:0; background:linear-gradient(90deg, var(--bg) 30%, transparent); padding-left:8px; }
+.row-arrow.right { right:0; background:linear-gradient(-90deg, var(--bg) 30%, transparent); padding-right:8px; }
+.row-container:hover .row-arrow { opacity:1; }
+.row-arrow svg { width:28px; height:28px; color:#fff; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5)); transition:transform 0.2s; }
+.row-arrow:hover svg { transform:scale(1.2); }
+
+/* ── CARDS ────────────────────────────────────────────────── */
+.card { background:linear-gradient(180deg, #1a1a1f, #111114); border:1px solid var(--line); border-radius:10px; overflow:visible; flex:0 0 var(--card-w); width:var(--card-w); min-width:var(--card-w); position:relative; transition:transform 0.3s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.3s ease, z-index 0s 0.3s; z-index:1; }
+@media (min-width:1201px) { .card { --card-w:min(145px, calc((100% - 7 * var(--card-gap)) / 8)); } }
+@media (max-width:1200px) { .card { --card-w:180px; } }
+@media (max-width:768px) { .card { --card-w:150px; } }
+.card.is-playable { cursor:pointer; }
+.card:hover { z-index:20; transition:transform 0.3s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.3s ease, z-index 0s 0s; }
+.card.is-playable:hover { transform:scale(1.08) translateY(-8px); box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(56,189,248,0.25), 0 0 40px rgba(56,189,248,0.1); }
+.card.is-pdf:hover { transform:scale(1.05) translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(239,68,68,0.25), 0 0 30px rgba(239,68,68,0.08); }
+
+.poster { position:relative; width:100%; aspect-ratio:1/1; background-size:cover; background-position:center; overflow:hidden; border-radius:10px 10px 0 0; }
+
+/* Play overlay */
+.play-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.25s ease; background:rgba(0,0,0,0.25); }
+.play-overlay svg { width:44px; height:44px; filter:drop-shadow(0 2px 8px rgba(0,0,0,0.6)); }
+.card.is-playable:hover .play-overlay { opacity:1; }
+
+/* Card animation */
+@keyframes cardIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+.card { animation:cardIn 0.4s ease both; }
+
+.badge { display:none; }
+.poster-title { display:none; }
+.desc { display:none; }
+.poster-logo { position:absolute; left:12px; bottom:12px; width:100px; max-height:48px; object-fit:contain; opacity:0.9; }
+.card-body { padding:0; }
+
+/* Card title bar */
+  .card-title-bar { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px 10px 7px; min-height:48px; background:linear-gradient(180deg,#1a1a1f 0%,#111114 100%); border-top:2px solid var(--accent); border-radius:0 0 10px 10px; }
+  .card.is-pdf .card-title-bar { border-top-color:var(--red); }
+  .card-title-label { display:block; width:100%; font-size:12px !important; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:none; min-width:0; line-height:1.25; text-align:center; }
+  .card-subcategory-label { display:block; width:100%; font-size:9px; font-weight:600; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.1; text-align:center; letter-spacing:0.02em; }
+
+/* Actions */
+.actions { display:flex; gap:8px; align-items:center; }
+.action { display:inline-block; color:#fff; font-weight:700; text-decoration:none; padding:6px 8px; border-radius:8px; border:1px solid rgba(148,163,184,0.2); background:rgba(15,23,42,0.55); font-size:11px; }
+
+/* PDF badges */
+.pdf-badge { display:inline-block; position:absolute; top:8px; left:8px; background:var(--red); color:#fff; font-size:9px; font-weight:700; letter-spacing:0.08em; padding:2px 6px; border-radius:4px; z-index:1; }
+.card.is-pdf { cursor:default; }
+.card.is-pdf .action { background:rgba(239,68,68,0.12); border-color:rgba(239,68,68,0.3); color:#fca5a5; }
+
+/* ── CARD EXPAND (Netflix info dropdown) ─────────────────── */
+.card-expand { position:absolute; left:50%; top:50%; width:calc(100% - 16px); max-width:calc(100% - 16px); background:linear-gradient(180deg,rgba(17,17,20,0.94),rgba(17,17,20,0.86)); border:1px solid rgba(56,189,248,0.12); border-radius:14px; padding:10px 12px 12px; opacity:0; visibility:hidden; transform:translate(-50%,-50%) scale(0.92); transition:all 0.2s ease; z-index:21; pointer-events:none; backdrop-filter:blur(16px) saturate(1.15); -webkit-backdrop-filter:blur(16px) saturate(1.15); text-align:center; box-shadow:0 16px 32px rgba(0,0,0,0.35); }
+.card:hover .card-expand { opacity:1; visibility:visible; transform:translate(-50%,-50%) scale(1); transition-delay:0.2s; }
+.card-expand .card-desc-text { font-size:11px; color:#d6dee9; line-height:1.45; margin:0 0 8px; text-align:center; }
+  .card-expand .card-desc-text.loading { color:#7a8190; }
+  .card-expand .card-meta { display:flex; gap:6px; align-items:center; flex-wrap:wrap; justify-content:center; }
+  .card-expand .card-cat-tag { font-size:9px; color:var(--accent); background:rgba(56,189,248,0.08); padding:2px 8px; border-radius:10px; font-weight:600; }
+  .card-expand .card-subcat-tag { font-size:9px; color:#cbd5e1; background:rgba(148,163,184,0.08); padding:2px 8px; border-radius:10px; font-weight:600; }
+  .card-expand .card-type-tag { font-size:9px; color:#a78bfa; background:rgba(167,139,250,0.08); padding:2px 8px; border-radius:10px; font-weight:600; }
+
+/* ── MODAL ────────────────────────────────────────────────── */
+/* Tooltip customizer */
+.tooltip-fab { position:fixed; right:24px; bottom:24px; z-index:350; display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; border:1px solid rgba(56,189,248,0.22); background:rgba(18,18,22,0.92); color:#e2e8f0; font-size:12px; font-weight:700; letter-spacing:0.01em; cursor:pointer; box-shadow:0 16px 36px rgba(0,0,0,0.35); backdrop-filter:blur(18px) saturate(1.2); -webkit-backdrop-filter:blur(18px) saturate(1.2); transition:transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease; }
+.tooltip-fab:hover { transform:translateY(-1px); border-color:rgba(56,189,248,0.45); box-shadow:0 20px 42px rgba(0,0,0,0.45), 0 0 0 1px rgba(56,189,248,0.08); }
+.tooltip-fab.is-active { background:rgba(56,189,248,0.14); color:#fff; border-color:rgba(56,189,248,0.4); }
+.tooltip-fab .tooltip-fab-dot { width:8px; height:8px; border-radius:999px; background:var(--accent); box-shadow:0 0 0 4px rgba(56,189,248,0.1); flex:none; }
+.tooltip-edit-mode .card { outline:1px dashed rgba(56,189,248,0.35); outline-offset:3px; cursor:copy; }
+.tooltip-edit-mode .card:hover { outline-color:rgba(56,189,248,0.8); transform:none !important; box-shadow:0 0 0 1px rgba(56,189,248,0.18); }
+.tooltip-edit-mode .card:hover .card-expand { opacity:0 !important; visibility:hidden !important; pointer-events:none !important; }
+.tooltip-editor { width:min(720px,92vw); }
+.tooltip-editor-shell { padding:28px; display:grid; gap:16px; }
+.tooltip-editor-eyebrow { font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); font-weight:700; }
+.tooltip-editor-title { font-size:22px; line-height:1.2; letter-spacing:-0.02em; margin-top:6px; }
+.tooltip-editor-meta { color:var(--muted); font-size:13px; line-height:1.5; }
+.tooltip-editor label { display:block; font-size:12px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+.tooltip-editor textarea { width:100%; min-height:180px; resize:vertical; padding:14px 16px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,0.03); color:#fff; font:inherit; line-height:1.5; outline:none; transition:border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+.tooltip-editor textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(56,189,248,0.12); background:rgba(255,255,255,0.05); }
+.tooltip-editor-actions { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+.tooltip-editor-actions button { border:none; border-radius:10px; padding:10px 14px; font:inherit; font-size:13px; font-weight:700; cursor:pointer; transition:transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+.tooltip-editor-actions button:hover { transform:translateY(-1px); }
+.tooltip-editor-actions .secondary { background:rgba(255,255,255,0.05); color:var(--text); border:1px solid var(--line); }
+.tooltip-editor-actions .secondary:hover { background:rgba(255,255,255,0.08); border-color:rgba(148,163,184,0.25); }
+.tooltip-editor-actions .primary { background:var(--accent); color:#04111a; }
+.tooltip-editor-actions .primary:hover { background:#7dd3fc; }
+.tooltip-editor-note { color:var(--muted); font-size:12px; line-height:1.5; }
+@media (max-width:768px) {
+  .tooltip-fab { right:16px; bottom:16px; padding:9px 12px; font-size:11px; }
+  .tooltip-editor-shell { padding:20px; }
+  .tooltip-editor-title { font-size:18px; }
+}
+
+.modal { position:fixed; inset:0; display:none; z-index:9999; }
+.modal.is-open { display:block; }
+.modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(4px); }
+.modal-dialog { position:relative; width:min(1000px, 92vw); margin:5vh auto; background:#111114; border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:0 40px 100px rgba(0,0,0,0.6); }
+.modal-close { position:absolute; top:12px; right:12px; width:36px; height:36px; border-radius:50%; background:rgba(0,0,0,0.6); color:#fff; font-size:18px; cursor:pointer; z-index:2; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+.modal-close:hover { background:rgba(255,255,255,0.1); }
+.modal-frame { aspect-ratio:16/9; width:100%; background:#000; }
+.modal-frame iframe { width:100%; height:100%; display:block; border:none; }
+
+/* ── MOBILE ──────────────────────────────────────────────── */
+.mobile-bar { display:none; }
+@media (max-width:768px) {
+  .mobile-bar { display:flex; align-items:center; justify-content:space-between; position:fixed; top:0; left:0; right:0; height:52px; background:rgba(13,13,16,0.92); backdrop-filter:blur(16px); border-bottom:1px solid var(--line); padding:0 16px; z-index:200; }
+  .mobile-bar img { height:24px; }
+  .hamburger { background:none; border:1px solid var(--line); border-radius:8px; color:#fff; font-size:18px; width:36px; height:36px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .sidebar { transform:translateX(-100%); transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); z-index:300; top:0; padding-top:64px; width:240px; }
+  .sidebar.is-open { transform:translateX(0); }
+  .sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:250; }
+  .sidebar-overlay.is-open { display:block; }
+  .main { margin-left:0 !important; width:100% !important; padding-top:52px; }
+  .hero { height:240px; border-radius:0; }
+  .hero-title { font-size:24px; }
+  .hero-content { bottom:24px; left:16px; right:16px; }
+}
+</style>
+</head>
+<body>
+  <!-- Mobile top bar -->
+  <div class="mobile-bar">
+    <img src="images/img_001.png" alt="Direct Track">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">☰</button>
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="images/img_001.png" alt="Direct Track" style="width:140px;max-width:100%;margin-bottom:16px;display:block;">
+    </div>
+    <button class="collapse-btn" id="collapseBtn" title="Toggle sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      <span>Collapse</span>
+    </button>
+    <div class="links">
+      <h3 class="sidebar-subhead">Categories</h3>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- Hero Banner -->
+    <div class="hero" id="heroBanner">
+      <div class="hero-slide active" style="background-image:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);">
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+          <div class="hero-eyebrow">Webfleet Training Academy</div>
+          <div class="hero-title">Master Fleet Management</div>
+          <div class="hero-desc">Explore our complete library of training videos and resources. From setup guides to advanced fleet analytics.</div>
+          <button class="hero-btn" onclick="document.querySelector('.main-inner').scrollIntoView({behavior:'smooth'})">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"></polygon></svg>
+            Browse Library
+          </button>
+        </div>
+      </div>
+      <div class="hero-slide" style="background-image:linear-gradient(135deg,#0f3460 0%,#533483 50%,#1a1a2e 100%);">
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+          <div class="hero-eyebrow">EV &amp; Sustainability</div>
+          <div class="hero-title">Go Green with Webfleet</div>
+          <div class="hero-desc">Track CO2 emissions, monitor EV fleets, and optimize your environmental footprint with powerful reporting tools.</div>
+          <button class="hero-btn" onclick="document.getElementById('ev---sustainability')?.scrollIntoView({behavior:'smooth'})">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+            Explore EV Tools
+          </button>
+        </div>
+      </div>
+      <div class="hero-slide" style="background-image:linear-gradient(135deg,#1a1a2e 0%,#0d7377 50%,#14274e 100%);">
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+          <div class="hero-eyebrow">Workflow Management</div>
+          <div class="hero-title">Streamline Operations</div>
+          <div class="hero-desc">Automate scheduling, optimize routes, and manage orders with Webfleet's powerful workflow tools.</div>
+          <button class="hero-btn" onclick="document.getElementById('workflow-management')?.scrollIntoView({behavior:'smooth'})">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            View Workflows
+          </button>
+        </div>
+      </div>
+      <div class="hero-dots" id="heroDots"></div>
+    </div>
+
+    <div class="main-inner">
+      <div class="header"><h1>Webfleet Training Hub</h1></div>
+      <p class="intro">Click any card to play or download PDF. Hover for details.</p>
+
+      <!-- Search -->
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="searchInput" placeholder="Search videos, PDFs, categories..." autocomplete="off">
+      </div>
+
+      <!-- Genre pills -->
+      <div class="genre-bar" id="genreBar"></div>
+
+    <!-- Cards section (original) -->
+    <section class="section" id="all">
+      <div class="section-head">
+        <h2>All Videos</h2>
+      </div>
+      <div class="grid">
+
+        <!-- Video 1: 1173730849 -->
+        
+          <!-- Video 2: 1173730833 -->
+        
+        <!-- Video 3: 1173730808 -->
+        
+        <!-- Video 4: 1173730795 -->
+        
+        <!-- Video 5: 1173730759 -->
+        
+        <!-- Video 6: 1173730743 -->
+        
+        <!-- Video 7: 1173730729 -->
+        
+        <!-- Video 8: 1173730712 -->
+        
+        <!-- Video 9: 1173730696 -->
+        
+        <!-- Video 10: 1173730689 -->
+        
+        <!-- Video 11: 1173730676 -->
+        
+        <!-- Video 12: 1173730662 -->
+        
+         <!-- Video 13: 1173730642 -->
+        
+        <!-- Video 14: 1173730596 -->
+        
+        <!-- Video 15: 1173730565 -->
+        
+        <!-- Video 16: 1173730542 -->
+        
+        <!-- Video 17: 1173730518 -->
+        
+        <!-- Video 18: 1173730503 -->
+        
+        <!-- Video 19: 1173730487 -->
+        
+<!-- PDF: Link 740 -->
+
+<!-- PDF: Link 245 -->
+
+<!-- PDF: PRO i -->
+
+<!-- PDF: PRO M -->
+
+<!-- PDF: Fleet Advisor Ai -->
+
+<!-- PDF: Cold Chain -->
+
+<!-- PDF: CO 2 Reporting -->
+
+<!-- PDF: License Check -->
+
+<!-- PDF: Webfleet Mobile -->
+
+<!-- PDF: Link 340 -->
+
+<!-- PDF: CAM Pro &amp; Lite -->
+
+<!-- PDF: Vehicle Check -->
+
+<!-- PDF: Light Vehicle Tracking -->
+
+<!-- PDF: Work App -->
+
+        <!-- Video 20: 1173730409 -->
+        
+        <!-- Video 21: 1173730347 -->
+        
+        <!-- Video 22: 1173730314 -->
+        
+        <!-- Video 23: 1173730299 -->
+        
+        <!-- Video 24: 1173730286 -->
+        
+        <!-- Video 25: 1173730264 -->
+        
+        <!-- Video 26: 1173730244 -->
+        
+        <!-- Video 27: 1173730236 -->
+        
+        <!-- Video 28: 1173730225 -->
+        
+        <!-- Video 29: 1173730206 -->
+        
+      <!-- Video 32: 1173730082 -->
+        
+        <!-- Video 33: 1173730030 -->
+        
+        <!-- Video 34: 1173730015 -->
+        
+        <!-- Video 35: 1173729994 -->
+        
+        <!-- Video 36: 1173729970 -->
+        
+        <!-- Video 37: 1173729958 -->
+        
+        <!-- Video 38: 1173729943 -->
+        
+        <!-- Video 39: 1173729921 -->
+        
+        <!-- Video 40: 1173729898 -->
+        
+        <!-- Video 41: 1173729852 -->
+        
+        <!-- Video 42: 1173729814 -->
+        
+        <!-- Video 43: 1173729797 -->
+        
+        <!-- Video 44: 1173729756 -->
+        
+      <!-- Video 48: 1173729624 -->
+        
+        <!-- Video 49: 1173729596 -->
+        
+        <!-- Video 50: 1173729574 -->
+        
+        <!-- Video 51: 1173729555 -->
+        
+        <!-- Video 52: 1173729543 -->
+        
+        <!-- Video 53: 1173729513 -->
+        
+     <!-- Video 56: 1173729464 -->
+        
+        <!-- Video 57: 1173729440 -->
+        
+       <!-- Video 59: 1173729394 -->
+        
+        <!-- Video 60: 1173729375 -->
+        
+        <!-- Video 61: 1173729339 -->
+        
+        <!-- Video 62: 1173729315 -->
+        
+        <!-- Video 63: 1173729293 -->
+        
+        <!-- Video 64: 1173729259 -->
+        
+        <!-- Video 65: 1173729223 -->
+        
+        <!-- Video 66: 1173729174 -->
+        
+        <!-- PDF: Webfleet Quick Start Guide -->
+        
+      <!-- Category: Webfleet Device Hardware --><!-- Category: Product Dive --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Cold Chain --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Mobile Apps --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Driver Terminals --><!-- Category: Setup & Configuration --><!-- Category: Workflow Management --><!-- Category: Webfleet Reporting Module --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Webfleet Device Hardware --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Reporting Module --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Cold Chain --><!-- Category: Workflow Management --><!-- Category: Webfleet Insights --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: EV & Sustainability --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: EV & Sustainability --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Maintenance & Service Setup --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Reporting Module --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Terminals --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Mobile Apps --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Insights --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Maintenance & Service Setup --><!-- Category: EV & Sustainability --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Maintenance & Service Setup --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Device Hardware --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Reporting Module --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Mobile Apps --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Insights --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><article class="card is-playable" data-vimeo-id="1173729339" data-title="Understanding CO2 Emissions" data-category="EV &amp; Sustainability" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_002.jpg'), url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Understanding CO2 Emissions</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729624" data-title="Monitoring Efficient Driving" data-category="EV &amp; Sustainability" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_005.jpg'), url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Monitoring Efficient Driving</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729596" data-title="Optimising your fleet" data-category="EV &amp; Sustainability" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_006.jpg'), url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Optimising your fleet</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729943" data-title="Fuel Management" data-category="EV &amp; Sustainability" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_007.jpg'), url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Fuel Management</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729958" data-title="EV Transition Tool" data-category="EV &amp; Sustainability" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_008.jpg'), url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">EV Transition Tool</span></div>
+        </article><!-- Category: Setup & Configuration --><article class="card is-playable" data-vimeo-id="1173729259" data-title="Users" data-category="Setup &amp; Configuration" data-bg-style="grey">
+          <div class="poster" style="background-image: url('images/img_009.jpg'), url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Users</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729513" data-title="Configuration" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_006.jpg'), url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Configuration</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730206" data-title="Admin" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_010.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Admin</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730314" data-title="Vehicles" data-category="Setup &amp; Configuration" data-bg-style="grey">
+          <div class="poster" style="background-image: url('images/img_011.jpg'), url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Vehicles</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729315" data-title="Equipment" data-category="Setup &amp; Configuration" data-bg-style="grey">
+          <div class="poster" style="background-image: url('images/img_012.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Equipment</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729440" data-title="Areas" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_013.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Areas</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730244" data-title="Speed" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_014.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Speed</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730015" data-title="Notifications" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_015.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Notifications</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730286" data-title="Dashboard" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_016.jpg'), url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Dashboard</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729898" data-title="OptiDrive 360" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_017.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">OptiDrive 360</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730236" data-title="Maintenance Basic" data-category="Setup &amp; Configuration" data-bg-style="grey">
+          <div class="poster" style="background-image: url('images/img_018.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Maintenance Basic</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730225" data-title="Maintenance Advanced" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_010.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Maintenance Advanced</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729464" data-title="Reports" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_019.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Reports</span></div>
+        </article><!-- Category: Wbfleet Video & Cameras --><article class="card is-pdf" data-type="pdf" data-title="CAM Pro &amp; Lite" data-category="Wbfleet Video &amp; Cameras" data-bg-style="full">
+  <div class="poster" style="background-image: url('images/img_020.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">CAM Pro &amp; Lite</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730565" data-title="AI-powered" data-category="Wbfleet Video &amp; Cameras" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_021.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">AI-powered</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729970" data-title="Video Telematics" data-category="Wbfleet Video &amp; Cameras" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_022.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Video Telematics</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730542" data-title="Video Telematics" data-category="Wbfleet Video &amp; Cameras" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_022.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Video Telematics</span></div>
+        </article><!-- Category: Webfleet Cold Chain --><article class="card is-playable" data-vimeo-id="1173729375" data-title="Cold Chain" data-category="Webfleet Cold Chain" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_023.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Cold Chain</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="Cold Chain" data-category="Webfleet Cold Chain" data-bg-style="full">
+  <div class="poster" style="background-image: url('images/img_024.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">Cold Chain</span></div>
+        </article><!-- Category: Webfleet Connected Car Platform --><article class="card is-playable" data-vimeo-id="1173729797" data-title="Connected Car" data-category="Webfleet Connected Car Platform" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_025.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Connected Car</span></div>
+        </article><!-- Category: Webfleet Device Hardware --><article class="card is-pdf" data-type="pdf" data-title="LCS 100" data-category="Webfleet Device Hardware" data-bg-style="grey">
+  <div class="poster" style="background-image: url('images/img_026.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">LCS 100</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="Link 740" data-category="Webfleet Device Hardware" data-bg-style="grey">
+  <div class="poster" style="background-image: url('images/img_027.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">Link 740</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="Link 245" data-category="Webfleet Device Hardware" data-bg-style="grey">
+  <div class="poster" style="background-image: url('images/img_028.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">Link 245</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="Link 340" data-category="Webfleet Device Hardware" data-bg-style="grey">
+  <div class="poster" style="background-image: url('images/img_029.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">Link 340</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="PRO i" data-category="Webfleet Device Hardware" data-bg-style="grey">
+  <div class="poster" style="background-image: url('images/img_030.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">PRO i</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="PRO M" data-category="Webfleet Device Hardware" data-bg-style="grey">
+  <div class="poster" style="background-image: url('images/img_031.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">PRO M</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="PRO X" data-category="Webfleet Device Hardware" data-bg-style="full">
+  <div class="poster" style="background-image: url('images/img_032.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">PRO X</span></div>
+        </article><!-- Category: Webfleet Driver Safety Dashboard --><article class="card is-playable" data-vimeo-id="1173729814" data-title="Optidrive 360" data-category="Webfleet Driver Safety Dashboard" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_017.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Optidrive 360</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="Fleet Advisor Ai" data-category="Webfleet Driver Safety Dashboard" data-bg-style="full">
+  <div class="poster" style="background-image: url('images/img_033.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">Fleet Advisor Ai</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729921" data-title="AI  Advisor" data-category="Webfleet Driver Safety Dashboard" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_033.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">AI  Advisor</span></div>
+        </article><!-- Category: Webfleet Driver Terminals --><article class="card is-pdf" data-type="pdf" data-title="PRO i" data-category="Webfleet Driver Terminals" data-bg-style="full">
+  <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">PRO i</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729543" data-title="Configuration" data-category="Webfleet Driver Terminals" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Configuration</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729852" data-title="Otidrive 360" data-category="Webfleet Driver Terminals" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Otidrive 360</span></div>
+        </article><!-- Category: Webfleet Insights --><article class="card is-playable" data-vimeo-id="1173730487" data-title="Webfleet Overview" data-category="Webfleet Insights" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_034.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Webfleet Overview</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729223" data-title="25 years" data-category="Webfleet Insights" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_035.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">25 years</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730299" data-title="Partner Ecosystem" data-category="Webfleet Insights" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_036.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Partner Ecosystem</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730347" data-title="Case Study" data-category="Webfleet Insights" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_037.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Case Study</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730518" data-title="(TPMS)" data-category="Webfleet Insights" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_038.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">(TPMS)</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730082" data-title="Digital Fleet Management" data-category="Webfleet Insights" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_039.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Digital Fleet Management</span></div>
+        </article><!-- Category: Webfleet Mobile Apps --><article class="card is-pdf" data-type="pdf" data-title="Webfleet Mobile" data-category="Webfleet Mobile Apps" data-bg-style="full">
+  <div class="poster" style="background-image: url('images/img_040.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">Webfleet Mobile</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="Vehicle Check" data-category="Webfleet Mobile Apps" data-bg-style="full">
+  <div class="poster" style="background-image: url('images/img_041.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">Vehicle Check</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="TPMS" data-category="Webfleet Mobile Apps" data-bg-style="full">
+  <div class="poster" style="background-image: url('images/img_038.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">TPMS</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729756" data-title="logbook" data-category="Webfleet Mobile Apps" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_042.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">logbook</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="License Check" data-category="Webfleet Mobile Apps" data-bg-style="full">
+  <div class="poster" style="background-image: url('images/img_043.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">License Check</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730264" data-title="Using Work App" data-category="Webfleet Mobile Apps" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_044.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Using Work App</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730596" data-title="Work App Highlights" data-category="Webfleet Mobile Apps" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Work App Highlights</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729394" data-title="Configuring Work App" data-category="Webfleet Mobile Apps" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Configuring Work App</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729555" data-title="Log book Mileage" data-category="Webfleet Mobile Apps" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Log book Mileage</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730409" data-title="logbook  claims" data-category="Webfleet Mobile Apps" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">logbook  claims</span></div>
+        </article><!-- Category: Webfleet Reporting Module --><article class="card is-playable" data-vimeo-id="1173730503" data-title="Reports" data-category="Webfleet Reporting Module" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_019.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Reports</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729464" data-title="Creating" data-category="Webfleet Reporting Module" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_045.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Creating</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729293" data-title="Advanced" data-category="Webfleet Reporting Module" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_046.jpg')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Advanced</span></div>
+        </article><article class="card is-pdf" data-type="pdf" data-title="CO 2" data-category="Webfleet Reporting Module" data-bg-style="full">
+  <div class="poster" style="background-image: url('images/img_047.jpg')'), url('images/img_004.png')'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
+    <span class="pdf-badge">PDF</span>
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+  
+
+          <div class="card-title-bar"><span class="card-title-label">CO 2</span></div>
+        </article><!-- Category: Workflow Management --><article class="card is-playable" data-vimeo-id="1173730795" data-title="Quick Tour" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Quick Tour</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730849" data-title="Overview" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Overview</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730712" data-title="Introduction" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Introduction</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730729" data-title="Features" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Features</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730642" data-title="Basic" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Basic</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730833" data-title="Starting" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Starting</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730759" data-title="Orders View" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Orders View</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730696" data-title="Importing" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Importing</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730743" data-title="NotifIfication" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">NotifIfication</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730662" data-title="Schedules" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Schedules</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730808" data-title="Optimisation" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Optimisation</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730689" data-title="Fleet Scheduler" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">Fleet Scheduler</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730676" data-title="ePOD" data-category="Workflow Management" data-bg-style="full">
+          <div class="poster" style="background-image: url('images/img_003.png')'), url('images/img_004.png')'); background-size: cover, cover; background-position: center, center;">
+          <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
+        
+          <div class="card-title-bar"><span class="card-title-label">ePOD</span></div>
+        </article></div>
+    </section>
+    </div><!-- .main-inner -->
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="videoModal">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-dialog">
+      <button class="modal-close" data-close="true">×</button>
+      <div class="modal-frame"><iframe id="vimeoPlayer" src="" allow="autoplay; fullscreen" allowfullscreen=""></iframe></div>
+    </div>
+  </div>
+
+  <button class="tooltip-fab" id="tooltipFab" type="button" aria-pressed="false" title="Edit tooltip text for any card">
+    <span class="tooltip-fab-dot"></span>
+    <span class="tooltip-fab-text">Customize tooltips</span>
+  </button>
+
+  <div class="modal" id="tooltipModal">
+    <div class="modal-backdrop" data-tooltip-close="true"></div>
+    <div class="modal-dialog tooltip-editor">
+      <button class="modal-close" data-tooltip-close="true">×</button>
+      <div class="tooltip-editor-shell">
+        <div>
+          <div class="tooltip-editor-eyebrow">Tooltip editor</div>
+          <div class="tooltip-editor-title" id="tooltipModalTitle">Card title</div>
+          <div class="tooltip-editor-meta" id="tooltipModalMeta">Category</div>
+        </div>
+        <div>
+          <label for="tooltipText">Tooltip text</label>
+          <textarea id="tooltipText" spellcheck="true" placeholder="Write the text shown below the card title on hover."></textarea>
+        </div>
+        <div class="tooltip-editor-actions">
+          <button type="button" class="secondary" id="tooltipResetBtn">Reset</button>
+          <button type="button" class="secondary" id="tooltipCancelBtn">Cancel</button>
+          <button type="button" class="primary" id="tooltipSaveBtn">Save</button>
+        </div>
+        <div class="tooltip-editor-note">Saved locally in this browser only.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Modal ──────────────────────────────────────────────
+    var modal=document.getElementById('videoModal'),iframe=document.getElementById('vimeoPlayer'),tooltipModal=document.getElementById('tooltipModal'),tooltipFab=document.getElementById('tooltipFab'),tooltipModalTitle=document.getElementById('tooltipModalTitle'),tooltipModalMeta=document.getElementById('tooltipModalMeta'),tooltipTextarea=document.getElementById('tooltipText'),tooltipSaveBtn=document.getElementById('tooltipSaveBtn'),tooltipResetBtn=document.getElementById('tooltipResetBtn'),tooltipCancelBtn=document.getElementById('tooltipCancelBtn');
+    var tooltipEditMode=false,activeTooltipCard=null;
+    document.querySelectorAll('[data-close="true"]').forEach(function(b){b.addEventListener('click',closeModal)});
+    document.querySelectorAll('[data-tooltip-close="true"]').forEach(function(b){b.addEventListener('click',closeTooltipEditor)});
+    function openModal(id){if(!id)return;iframe.src='https://player.vimeo.com/video/'+id+'?autoplay=1&badge=0&byline=0&portrait=0&title=0';modal.classList.add('is-open');document.body.style.overflow='hidden';}
+    function closeModal(){iframe.src='';modal.classList.remove('is-open');document.body.style.overflow='';}
+    document.addEventListener('keydown',function(e){if(e.key!=='Escape')return;if(tooltipModal&&tooltipModal.classList.contains('is-open')){closeTooltipEditor();return;}if(modal.classList.contains('is-open'))closeModal();else if(tooltipEditMode)setTooltipEditMode(false);});
+
+    // ── Hero Carousel ──────────────────────────────────────
+    (function(){
+      var slides=document.querySelectorAll('.hero-slide'),dots=document.getElementById('heroDots'),cur=0;
+      slides.forEach(function(_,i){var d=document.createElement('button');d.className='hero-dot'+(i===0?' active':'');d.addEventListener('click',function(){goTo(i)});dots.appendChild(d);});
+      function goTo(n){slides[cur].classList.remove('active');dots.children[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');dots.children[cur].classList.add('active');}
+      setInterval(function(){goTo((cur+1)%slides.length)},6000);
+    })();
+
+    // ── Category Logic ─────────────────────────────────────
+    function getVideoCategory(t){
+      if(t.includes('Workflow Management'))return'Workflow Management';
+      if(t.includes('EV')||t.includes('Sustainability'))return'EV & Sustainability';
+      if(t.includes('Report')||t.includes('CO2')||t.includes('Dashboard'))return'Webfleet Reporting Module';
+      if(t.includes('Configuration')||t.includes('Configuring')||t.includes('Setup')||t.includes('Device')||t.includes('Driver Terminal'))return'Setup & Configuration';
+      return'Webfleet Insights';
+    }
+
+    var ICONS={'EV & Sustainability':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>','Maintenance & Service Setup':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>','Setup & Configuration':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-2.82 1.18V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0"/></svg>','Wbfleet Video & Cameras':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>','Webfleet Cold Chain':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>','Webfleet Connected Car Platform':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>','Webfleet Device Hardware':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>','Webfleet Driver Safety Dashboard':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>','Webfleet Driver Terminals':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>','Webfleet Insights':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>','Webfleet Mobile Apps':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>','Webfleet Reporting Module':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>','Workflow Management':'<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>'};
+    var DICON='<svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>';
+
+    // ── AI Descriptions ────────────────────────────────────
+    var descCache={},descQ=[],isGen=false;
+    function descKey(t,c){return(c+'::'+t).toLowerCase().trim();}
+    function escapeHtml(value){
+      return String(value||'').replace(/[&<>"]/g,function(ch){
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch];
+      });
+    }
+    var TOOLTIP_STORE_KEY='training-hub-tooltip-overrides-v1';
+    var tooltipStore=loadTooltipStore();
+    function loadTooltipStore(){try{return JSON.parse(localStorage.getItem(TOOLTIP_STORE_KEY)||'{}')||{};}catch(e){return{};}}
+    function persistTooltipStore(){try{localStorage.setItem(TOOLTIP_STORE_KEY,JSON.stringify(tooltipStore));}catch(e){}}
+    function getCardKey(card){
+      var type=card.dataset.vimeoId?'video':(card.dataset.type||(card.classList.contains('is-pdf')?'pdf':'card'));
+      var id=card.dataset.vimeoId||'';
+      var title=(card.dataset.title||'').trim().toLowerCase();
+      var category=(card.dataset.category||'').trim().toLowerCase();
+      return [type,id,title,category].join('::');
+    }
+    function getFallbackTooltip(card){
+      var title=(card.dataset.title||'this item').trim().toLowerCase();
+      return'Learn about '+title+' in Webfleet fleet management.';
+    }
+    function getGeneratedTooltip(card){
+      var t=card.dataset.title||'',c=card.dataset.category||'';
+      return descCache[descKey(t,c)]||'';
+    }
+    function resolveTooltipText(card){
+      var custom=tooltipStore[getCardKey(card)]||'';
+      return custom||getGeneratedTooltip(card)||'';
+    }
+    function syncTooltipCard(card){
+      if(!card)return;
+      var textEl=card.querySelector('.card-expand .card-desc-text');
+      if(!textEl)return;
+      var custom=tooltipStore[getCardKey(card)]||'';
+      var generated=getGeneratedTooltip(card)||'';
+      textEl.textContent=custom||generated||'Loading...';
+      textEl.classList.toggle('loading',!custom&&!generated);
+      textEl.classList.toggle('custom',!!custom);
+    }
+    function openTooltipEditor(card){
+      if(!card||!tooltipModal||!tooltipTextarea)return;
+      activeTooltipCard=card;
+      var title=card.dataset.title||'Untitled';
+      var category=card.dataset.category||'Uncategorized';
+      var type=card.classList.contains('is-pdf')?'PDF':'Video';
+      var text=resolveTooltipText(card)||getFallbackTooltip(card);
+      tooltipModalTitle.textContent=title;
+      tooltipModalMeta.textContent=category+' | '+type;
+      tooltipTextarea.value=text;
+      tooltipModal.classList.add('is-open');
+      document.body.style.overflow='hidden';
+      setTimeout(function(){tooltipTextarea.focus();tooltipTextarea.select();},0);
+    }
+    function closeTooltipEditor(){
+      if(!tooltipModal)return;
+      tooltipModal.classList.remove('is-open');
+      activeTooltipCard=null;
+      document.body.style.overflow='';
+    }
+    function saveTooltipEditor(){
+      if(!activeTooltipCard||!tooltipTextarea)return;
+      var key=getCardKey(activeTooltipCard);
+      var text=tooltipTextarea.value.trim();
+      if(text){tooltipStore[key]=text;}else{delete tooltipStore[key];}
+      persistTooltipStore();
+      syncTooltipCard(activeTooltipCard);
+      closeTooltipEditor();
+    }
+    function resetTooltipEditor(){
+      if(!activeTooltipCard||!tooltipTextarea)return;
+      tooltipTextarea.value=getGeneratedTooltip(activeTooltipCard)||getFallbackTooltip(activeTooltipCard);
+      tooltipTextarea.focus();
+      tooltipTextarea.select();
+    }
+    function setTooltipEditMode(on){
+      tooltipEditMode=typeof on==='boolean'?on:!tooltipEditMode;
+      document.body.classList.toggle('tooltip-edit-mode',tooltipEditMode);
+      if(tooltipFab){
+        tooltipFab.classList.toggle('is-active',tooltipEditMode);
+        tooltipFab.setAttribute('aria-pressed',tooltipEditMode?'true':'false');
+        var label=tooltipFab.querySelector('.tooltip-fab-text');
+        if(label) label.textContent=tooltipEditMode?'Editing tooltips':'Customize tooltips';
+      }
+      if(!tooltipEditMode&&tooltipModal&&tooltipModal.classList.contains('is-open')) closeTooltipEditor();
+    }
+    if(tooltipFab) tooltipFab.addEventListener('click',function(){setTooltipEditMode();});
+    if(tooltipSaveBtn) tooltipSaveBtn.addEventListener('click',saveTooltipEditor);
+    if(tooltipResetBtn) tooltipResetBtn.addEventListener('click',resetTooltipEditor);
+    if(tooltipCancelBtn) tooltipCancelBtn.addEventListener('click',closeTooltipEditor);
+    function addExpand(card){
+      if(card.querySelector('.card-expand'))return;
+      var t=card.dataset.title||'',c=card.dataset.category||'',isPdf=card.classList.contains('is-pdf');
+      var custom=tooltipStore[getCardKey(card)]||'';
+      var k=descKey(t,c),d=custom||descCache[k]||'';
+      var s=card.dataset.subcategory||'';
+      var panel=document.createElement('div');panel.className='card-expand';
+      panel.innerHTML='<p class="card-desc-text '+(d?'':'loading')+'">'+escapeHtml(d||'Loading...')+'</p><div class="card-meta"><span class="card-cat-tag">'+escapeHtml(c)+'</span>'+(s?'<span class="card-subcat-tag">'+escapeHtml(s)+'</span>':'')+(isPdf?'<span class="card-type-tag">PDF</span>':'<span class="card-type-tag">Video</span>')+'</div>';
+      (card.querySelector('.poster')||card).appendChild(panel);
+      if(custom){panel.querySelector('.card-desc-text').classList.add('custom');}
+      if(!d&&!descCache.hasOwnProperty(k)){descQ.push({title:t,category:c,key:k,el:panel.querySelector('.card-desc-text')});processQ();}
+    }
+    function syncSubcategoryLabels(){
+      document.querySelectorAll('.card').forEach(function(card){
+        var bar=card.querySelector('.card-title-bar');
+        if(!bar)return;
+        bar.querySelectorAll('.card-subcategory-label').forEach(function(node){node.remove();});
+        var sub=(card.dataset.subcategory||'').trim();
+        if(!sub)return;
+        var el=document.createElement('span');
+        el.className='card-subcategory-label';
+        el.textContent=sub;
+        bar.appendChild(el);
+      });
+    }
+    async function processQ(){
+      if(isGen||descQ.length===0)return;isGen=true;
+      var batch=descQ.splice(0,8);
+      var prompt='Write very short (max 18 words) descriptions for these Webfleet fleet management training items. Return ONLY a JSON object, no markdown.\n';
+      batch.forEach(function(i){prompt+=i.key+'\n';});
+      try{
+        var r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:'Return ONLY valid JSON mapping keys to 18-word-max descriptions for fleet management training content. No markdown.',messages:[{role:'user',content:prompt}]})});
+        var data=await r.json(),txt=(data.content&&data.content[0]?data.content[0].text:'{}').replace(/```json|```/g,'').trim();
+        var descs=JSON.parse(txt);
+        batch.forEach(function(i){
+          var d=descs[i.key]||'Learn about '+i.title.toLowerCase()+' in Webfleet.';
+          descCache[i.key]=d;
+          document.querySelectorAll('.card-expand .card-desc-text.loading').forEach(function(el){
+            var card=el.closest('.card');if(card&&descKey(card.dataset.title||'',card.dataset.category||'')===i.key){el.textContent=d;el.classList.remove('loading');}
+          });
+        });
+      }catch(e){batch.forEach(function(i){var fb='Learn about '+i.title.toLowerCase()+' in Webfleet fleet management.';descCache[i.key]=fb;if(i.el){i.el.textContent=fb;i.el.classList.remove('loading');}});}
+      isGen=false;if(descQ.length>0)setTimeout(processQ,600);
+    }
+
+    // ── Reorganize ─────────────────────────────────────────
+    function reorganize(){
+      var cards=Array.from(document.querySelectorAll('.card.is-playable,.card.is-pdf'));
+      var cats={};
+      cards.forEach(function(c){var t=c.dataset.title||'',cat=c.dataset.category||getVideoCategory(t);c.dataset.category=cat;if(!cats[cat])cats[cat]=[];cats[cat].push(c);});
+      var sorted=Object.keys(cats).sort();
+      var main=document.querySelector('.main-inner');
+      main.querySelectorAll('.section').forEach(function(s){s.remove();});
+
+      // Genre pills
+      var gb=document.getElementById('genreBar');
+      gb.innerHTML='<button class="genre-pill active" data-cat="all">All</button>';
+      sorted.forEach(function(name){
+        var pill=document.createElement('button');pill.className='genre-pill';pill.dataset.cat=name;pill.textContent=name;
+        pill.addEventListener('click',function(){
+          document.querySelectorAll('.genre-pill').forEach(function(p){p.classList.remove('active');});
+          pill.classList.add('active');
+          var target=document.getElementById(name.toLowerCase().replace(/[&\s]+/g,'-'));
+          if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+        });
+        gb.appendChild(pill);
+      });
+      gb.querySelector('[data-cat="all"]').addEventListener('click',function(){
+        document.querySelectorAll('.genre-pill').forEach(function(p){p.classList.remove('active');});
+        this.classList.add('active');
+        window.scrollTo({top:document.querySelector('.main-inner').offsetTop,behavior:'smooth'});
+      });
+
+      sorted.forEach(function(catName,ci){
+        var vids=cats[catName];if(!vids.length)return;
+        var sec=document.createElement('section');sec.className='section';sec.id=catName.toLowerCase().replace(/[&\s]+/g,'-');
+        var head=document.createElement('div');head.className='section-head';
+        var pc=vids.filter(function(c){return c.classList.contains('is-pdf')}).length,vc=vids.length-pc;
+        var lbl=vc>0&&pc>0?vc+' videos, '+pc+' PDFs':pc>0?pc+' PDFs':vc+' videos';
+        head.innerHTML='<div><h2>'+catName+'</h2></div><p>'+lbl+'</p>';
+
+        var rc=document.createElement('div');rc.className='row-container';
+        var al=document.createElement('button');al.className='row-arrow left';al.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>';
+        var ar=document.createElement('button');ar.className='row-arrow right';ar.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>';
+        var rs=document.createElement('div');rs.className='row-scroll';
+
+        vids.forEach(function(card,i){
+          var clone=card.cloneNode(true);clone.dataset.category=catName;
+          clone.style.animationDelay=(ci*0.1+i*0.04)+'s';
+          addExpand(clone);rs.appendChild(clone);
+        });
+
+        al.addEventListener('click',function(){rs.scrollBy({left:-500,behavior:'smooth'});});
+        ar.addEventListener('click',function(){rs.scrollBy({left:500,behavior:'smooth'});});
+
+        rc.appendChild(al);rc.appendChild(rs);rc.appendChild(ar);
+        sec.appendChild(head);sec.appendChild(rc);main.appendChild(sec);
+      });
+
+      updateSidebar(cats);attachEvents();syncSubcategoryLabels();
+    }
+
+    // ── Sidebar ────────────────────────────────────────────
+    function updateSidebar(cats){
+      var sb=document.querySelector('.sidebar .links');
+      var heading=sb.querySelector('.sidebar-subhead');
+      sb.querySelectorAll('a:not(.collapse-btn)').forEach(function(a){a.remove();});
+      var sorted=Object.keys(cats).sort(),frag=document.createDocumentFragment();
+      sorted.forEach(function(name){
+        var ct=cats[name].length;if(!ct)return;
+        var a=document.createElement('a');a.href='#'+name.toLowerCase().replace(/[&\s]+/g,'-');
+        a.innerHTML=(ICONS[name]||DICON)+'<span class="cat-label">'+name+'</span><span class="cat-count">'+ct+'</span>';
+        a.addEventListener('click',function(e){e.preventDefault();var t=document.getElementById(a.getAttribute('href').substring(1));if(t)t.scrollIntoView({behavior:'smooth'});});
+        frag.appendChild(a);
+      });
+      heading.parentNode.appendChild(frag);
+    }
+
+    // ── Events ─────────────────────────────────────────────
+    function attachEvents(){
+      document.querySelectorAll('.card').forEach(function(c){
+        c.addEventListener('click',function(e){
+          if(e.target.closest('.action,.card-expand'))return;
+          if(tooltipEditMode){e.preventDefault();e.stopPropagation();openTooltipEditor(c);return;}
+          if(!c.classList.contains('is-playable'))return;
+          var id=c.dataset.vimeoId;if(id)openModal(id);
+        });
+        var btn=c.querySelector('.action');if(btn)btn.addEventListener('click',function(e){e.stopPropagation();var id=c.dataset.vimeoId;if(id)openModal(id);});
+      });
+    }
+
+    // ── Scroll Reveal ──────────────────────────────────────
+
+    // ── Active sidebar tracking ────────────────────────────
+    (function(){
+      var links=[];
+      var trackObs=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            var id=e.target.id;
+            document.querySelectorAll('.sidebar a').forEach(function(a){a.classList.remove('active');if(a.getAttribute('href')==='#'+id)a.classList.add('active');});
+          }
+        });
+      },{threshold:0.15,rootMargin:'-20% 0px -60% 0px'});
+      setTimeout(function(){document.querySelectorAll('.section').forEach(function(s){trackObs.observe(s);});},500);
+    })();
+
+    // ── Search ─────────────────────────────────────────────
+    document.getElementById('searchInput').addEventListener('input',function(){
+      var q=this.value.toLowerCase().trim();
+      document.querySelectorAll('.section').forEach(function(sec){
+        var vis=0;sec.querySelectorAll('.card').forEach(function(c){
+          var m=!q||(c.dataset.title||'').toLowerCase().includes(q)||(c.dataset.category||'').toLowerCase().includes(q);
+          c.style.display=m?'':'none';if(m)vis++;
+        });sec.style.display=vis?'':'none';
+      });
+    });
+
+    // ── Collapse ───────────────────────────────────────────
+    document.getElementById('collapseBtn').addEventListener('click',function(){
+      document.querySelector('.sidebar').classList.toggle('collapsed');
+      document.body.classList.toggle('sb-collapsed');
+    });
+
+    // ── Mobile ─────────────────────────────────────────────
+    var sb=document.querySelector('.sidebar'),sbo=document.getElementById('sidebarOverlay'),hb=document.getElementById('hamburgerBtn');
+    function openSB(){sb.classList.add('is-open');sbo.classList.add('is-open');document.body.style.overflow='hidden';}
+    function closeSB(){sb.classList.remove('is-open');sbo.classList.remove('is-open');document.body.style.overflow='';}
+    if(hb)hb.addEventListener('click',function(){sb.classList.contains('is-open')?closeSB():openSB();});
+    if(sbo)sbo.addEventListener('click',closeSB);
+    document.addEventListener('click',function(e){if(e.target.closest('.sidebar a')&&window.innerWidth<=768)closeSB();});
+
+    // ── Init ───────────────────────────────────────────────
+    window.addEventListener('load',function(){setTimeout(reorganize,100);});
+  </script>
+
+
+
+</body></html>
