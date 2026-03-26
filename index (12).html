@@ -20,15 +20,15 @@ body::before { content:''; position:fixed; inset:0; z-index:-1; background:
 
 /* ── SIDEBAR ─────────────────────────────────────────────── */
 .sidebar { width:240px; background:var(--sidebar-bg); backdrop-filter:none; -webkit-backdrop-filter:none; border-right:1px solid rgba(255,255,255,0.08); padding:24px 16px; height:100vh; position:fixed; overflow-y:auto; overflow-x:hidden; z-index:100; transition:width 0.35s cubic-bezier(0.4,0,0.2,1); scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.08) transparent; }
-.sidebar::after { content:''; position:fixed; left:0; top:0; width:240px; height:100vh; pointer-events:none; z-index:101; border:18px solid transparent; border-image:url('images/border.png') 40 round; transition:width 0.35s cubic-bezier(0.4,0,0.2,1); }
-.sidebar.collapsed::after { width:60px; }
 .sidebar::-webkit-scrollbar { width:4px; }
 .sidebar::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.08); border-radius:4px; }
 .sidebar h2 { display:none; }
 .sidebar > p { display:none; }
-.sidebar-brand { display:block; width:140px; margin:0 0 16px; transition:all 0.3s; }
-.sidebar-brand::before { content:''; display:block; width:140px; aspect-ratio:2000 / 290; background:url('direct-track-logo-transparent.png') center/contain no-repeat; }
-.sidebar-brand img { display:none !important; }
+.sidebar-brand { display:block; width:100%; margin:0 0 20px; transition:all 0.3s; }
+.logo-rotator { position:relative; width:100%; height:68px; background:#4d5b67; border-radius:6px; overflow:hidden; }
+.logo-slide { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; object-position:center; padding:4px 8px; transition:opacity 1s ease; }
+.logo-slide-1 { opacity:1; }
+.logo-slide-2 { opacity:0; }
 .sidebar-subhead { margin:16px 0 8px; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#fff; font-weight:800; }
 .links { margin-top:12px; padding-top:12px; border-top:1px solid var(--line); }
 
@@ -119,7 +119,7 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
 .row-arrow:hover svg { transform:scale(1.2); }
 
 /* ── CARDS ────────────────────────────────────────────────── */
-.card { background:linear-gradient(180deg, #1a1a1f, #111114); border:1px solid rgba(148,163,184,0.25); border-radius:10px; overflow:visible; flex:0 0 var(--card-w); width:var(--card-w); min-width:var(--card-w); position:relative; transition:transform 0.3s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.3s ease, z-index 0s 0.3s; z-index:1; box-shadow:0 2px 8px rgba(0,0,0,0.4); }
+.card { background:linear-gradient(180deg, #1a1a1f, #111114); border:1px solid var(--line); border-radius:10px; overflow:visible; flex:0 0 var(--card-w); width:var(--card-w); min-width:var(--card-w); position:relative; transition:transform 0.3s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.3s ease, z-index 0s 0.3s; z-index:1; }
 @media (min-width:1201px) { .card { --card-w:min(145px, calc((100% - 7 * var(--card-gap)) / 8)); } }
 @media (max-width:1200px) { .card { --card-w:180px; } }
 @media (max-width:768px) { .card { --card-w:150px; } }
@@ -129,7 +129,6 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
 .card.is-pdf:hover { transform:scale(1.05) translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(239,68,68,0.25), 0 0 30px rgba(239,68,68,0.08); }
 
 .poster { position:relative; width:100%; aspect-ratio:1/1; background-size:cover; background-position:center; overflow:hidden; border-radius:10px 10px 0 0; }
-.poster::after { content:''; position:absolute; inset:0; pointer-events:none; z-index:2; }
 
 /* Play overlay */
 .play-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.25s ease; background:rgba(0,0,0,0.25); }
@@ -147,10 +146,12 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
 .card-body { padding:0; }
 
 /* Card title bar */
-  .card-title-bar { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px 10px 7px; min-height:48px; background:linear-gradient(180deg,#1a1a1f 0%,#111114 100%); border-top:2px solid var(--accent); border-radius:0 0 10px 10px; }
-  .card.is-pdf .card-title-bar { border-top-color:var(--red); }
-  .card-title-label { display:block; width:100%; font-size:12px !important; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:none; min-width:0; line-height:1.25; text-align:center; }
-  .card-subcategory-label { display:block; width:100%; font-size:9px; font-weight:600; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.1; text-align:center; letter-spacing:0.02em; }
+  .card-title-bar { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:8px 10px 9px; min-height:52px; background:linear-gradient(180deg,#2a2a2a 0%,#111 100%); background-image:linear-gradient(180deg,#2a2a2a 0%,#111 100%), repeating-linear-gradient(45deg,rgba(255,255,255,0.015) 0px,rgba(255,255,255,0.015) 1px,transparent 1px,transparent 6px); border-top:1px solid rgba(255,255,255,0.12); border-bottom:4px solid #000; border-radius:0 0 10px 10px; transition:all 0.1s ease; }
+  .card:hover .card-title-bar { background:linear-gradient(180deg,#222 0%,#0a0a0a 100%); border-bottom-width:2px; padding-top:10px; }
+  .card:active .card-title-bar { background:#0a0a0a; border-bottom-width:1px; padding-top:11px; }
+  .card.is-pdf .card-title-bar { border-top-color:rgba(239,68,68,0.5); }
+  .card-title-label { display:block; width:100%; font-size:11px !important; font-weight:700; color:#fff; white-space:normal; line-height:1.3; text-align:center; }
+  .card-subcategory-label { display:block; width:100%; font-size:9px; font-weight:600; color:rgba(255,255,255,0.45); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.1; text-align:center; letter-spacing:0.02em; }
 
 /* Actions */
 .actions { display:flex; gap:8px; align-items:center; }
@@ -158,7 +159,7 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
 
 /* PDF badges */
 .pdf-badge { display:inline-block; position:absolute; top:8px; left:8px; background:var(--red); color:#fff; font-size:9px; font-weight:700; letter-spacing:0.08em; padding:2px 6px; border-radius:4px; z-index:1; }
-.card.is-pdf { cursor:default; }
+.card.is-pdf { cursor:pointer; }
 .card.is-pdf .action { background:rgba(239,68,68,0.12); border-color:rgba(239,68,68,0.3); color:#fca5a5; }
 
 /* ── CARD EXPAND (Netflix info dropdown) ─────────────────── */
@@ -238,7 +239,7 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
 
   <aside class="sidebar">
     <div class="sidebar-brand">
-      <img src="images/img_001.png" alt="Direct Track" style="width:140px;max-width:100%;margin-bottom:16px;display:block;">
+      <div class="logo-rotator"><video autoplay="" loop="" muted="" playsinline="" style="width:100%;height:100%;object-fit:contain;object-position:center;padding:4px 8px;transform:scale(1.67);transform-origin:center center;"><source src="logo.mp4" type="video/mp4"></video></div>
     </div>
     <button class="collapse-btn" id="collapseBtn" title="Toggle sidebar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -457,16 +458,16 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
         
         <!-- PDF: Webfleet Quick Start Guide -->
         
-      <!-- Category: Webfleet Device Hardware --><!-- Category: Product Dive --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Cold Chain --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Mobile Apps --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Driver Terminals --><!-- Category: Setup & Configuration --><!-- Category: Workflow Management --><!-- Category: Webfleet Reporting Module --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Webfleet Device Hardware --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Reporting Module --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Cold Chain --><!-- Category: Workflow Management --><!-- Category: Webfleet Insights --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: EV & Sustainability --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: EV & Sustainability --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Maintenance & Service Setup --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Reporting Module --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Terminals --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Mobile Apps --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Insights --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Maintenance & Service Setup --><!-- Category: EV & Sustainability --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Maintenance & Service Setup --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Device Hardware --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Reporting Module --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Mobile Apps --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Insights --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><article class="card is-playable" data-vimeo-id="1173729339" data-title="Understanding CO2 Emissions" data-category="EV &amp; Sustainability" data-bg-style="full">
+      <!-- Category: Webfleet Device Hardware --><!-- Category: Product Dive --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Cold Chain --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Mobile Apps --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Driver Terminals --><!-- Category: Setup & Configuration --><!-- Category: Workflow Management --><!-- Category: Webfleet Reporting Module --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Webfleet Device Hardware --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Reporting Module --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Cold Chain --><!-- Category: Workflow Management --><!-- Category: Webfleet Insights --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: EV & Sustainability --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: EV & Sustainability --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Maintenance --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Maintenance & Service Setup --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Reporting Module --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Terminals --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Mobile Apps --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Insights --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Maintenance & Service Setup --><!-- Category: EV & Sustainability --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: Setup & Configuration --><!-- Category: Maintenance & Service Setup --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Device Hardware --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Reporting Module --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Mobile Apps --><!-- Category: EV & Sustainability --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Insights --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Maintenance & Service Setup --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><!-- Category: Setup & Configuration --><!-- Category: Wbfleet Video & Cameras --><!-- Category: Webfleet Cold Chain --><!-- Category: Webfleet Connected Car Platform --><!-- Category: Webfleet Device Hardware --><!-- Category: Webfleet Driver Safety Dashboard --><!-- Category: Webfleet Driver Terminals --><!-- Category: Webfleet Insights --><!-- Category: Webfleet Mobile Apps --><!-- Category: Webfleet Reporting Module --><!-- Category: Workflow Management --><!-- Category: EV & Sustainability --><article class="card is-playable" data-vimeo-id="1173729339" data-title="Understanding CO2 emmissions in Webfleet" data-category="EV &amp; Sustainability" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_002.jpg'), url('images/img_003.png'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Understanding CO2 Emissions</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173729624" data-title="Monitoring Efficient Driving" data-category="EV &amp; Sustainability" data-bg-style="full">
+          <div class="card-title-bar"><span class="card-title-label">Understanding CO2 emmissions in Webfleet</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729624" data-title="Green &amp; Safe Driving" data-category="EV &amp; Sustainability" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_005.jpg'), url('images/img_003.png'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Monitoring Efficient Driving</span></div>
+          <div class="card-title-bar"><span class="card-title-label">Green &amp; Safe Driving</span></div>
         </article><article class="card is-playable" data-vimeo-id="1173729596" data-title="Optimising your fleet" data-category="EV &amp; Sustainability" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_006.jpg'), url('images/img_003.png'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
@@ -482,78 +483,78 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
           <div class="card-title-bar"><span class="card-title-label">EV Transition Tool</span></div>
-        </article><!-- Category: Setup & Configuration --><article class="card is-playable" data-vimeo-id="1173729259" data-title="Users" data-category="Setup &amp; Configuration" data-bg-style="grey">
+        </article><!-- Category: Setup & Configuration --><article class="card is-playable" data-vimeo-id="1173729259" data-title="User Setup" data-category="Setup &amp; Configuration" data-bg-style="grey">
           <div class="poster" style="background-image: url('images/img_009.jpg'), url('images/img_003.png'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Users</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173729513" data-title="Configuration" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="card-title-bar"><span class="card-title-label">User Setup</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729513" data-title="Device Configuration" data-category="Setup &amp; Configuration" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_006.jpg'), url('images/img_003.png'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Configuration</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173730206" data-title="Admin" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="card-title-bar"><span class="card-title-label">Device Configuration</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730206" data-title="Self-Service Administration" data-category="Setup &amp; Configuration" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_010.jpg'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Admin</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173730314" data-title="Vehicles" data-category="Setup &amp; Configuration" data-bg-style="grey">
+          <div class="card-title-bar"><span class="card-title-label">Self-Service Administration</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730314" data-title="Vehicle Tracking" data-category="Setup &amp; Configuration" data-bg-style="grey">
           <div class="poster" style="background-image: url('images/img_011.jpg'), url('images/img_003.png'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Vehicles</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173729315" data-title="Equipment" data-category="Setup &amp; Configuration" data-bg-style="grey">
+          <div class="card-title-bar"><span class="card-title-label">Vehicle Tracking</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729315" data-title="Asset Tracking" data-category="Setup &amp; Configuration" data-bg-style="grey">
           <div class="poster" style="background-image: url('images/img_012.jpg'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Equipment</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173729440" data-title="Areas" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="card-title-bar"><span class="card-title-label">Asset Tracking</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729440" data-title="Create Areas or Geofences" data-category="Setup &amp; Configuration" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_013.jpg'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Areas</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173730244" data-title="Speed" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="card-title-bar"><span class="card-title-label">Create Areas or Geofences</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730244" data-title="Speed Reporting" data-category="Setup &amp; Configuration" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_014.jpg'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Speed</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173730015" data-title="Notifications" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="card-title-bar"><span class="card-title-label">Speed Reporting</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730015" data-title="Create Notifications" data-category="Setup &amp; Configuration" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_015.jpg'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Notifications</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173730286" data-title="Dashboard" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="card-title-bar"><span class="card-title-label">Create Notifications</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730286" data-title="Understanding the Dashboard" data-category="Setup &amp; Configuration" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_016.jpg'), url('images/img_003.png'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Dashboard</span></div>
+          <div class="card-title-bar"><span class="card-title-label">Understanding the Dashboard</span></div>
         </article><article class="card is-playable" data-vimeo-id="1173729898" data-title="OptiDrive 360" data-category="Setup &amp; Configuration" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_017.jpg'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
           <div class="card-title-bar"><span class="card-title-label">OptiDrive 360</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173730236" data-title="Maintenance Basic" data-category="Setup &amp; Configuration" data-bg-style="grey">
+        </article><article class="card is-playable" data-vimeo-id="1173730236" data-title="Service Planner" data-category="Setup &amp; Configuration" data-bg-style="grey">
           <div class="poster" style="background-image: url('images/img_018.jpg'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Maintenance Basic</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173730225" data-title="Maintenance Advanced" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="card-title-bar"><span class="card-title-label">Service Planner</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173730225" data-title="Service Planner Advanced" data-category="Setup &amp; Configuration" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_010.jpg'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Maintenance Advanced</span></div>
-        </article><article class="card is-playable" data-vimeo-id="1173729464" data-title="Reports" data-category="Setup &amp; Configuration" data-bg-style="full">
+          <div class="card-title-bar"><span class="card-title-label">Service Planner Advanced</span></div>
+        </article><article class="card is-playable" data-vimeo-id="1173729464" data-title="Creating Reports" data-category="Setup &amp; Configuration" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_019.jpg'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
-          <div class="card-title-bar"><span class="card-title-label">Reports</span></div>
-        </article><!-- Category: Wbfleet Video & Cameras --><article class="card is-pdf" data-type="pdf" data-title="CAM Pro &amp; Lite" data-category="Wbfleet Video &amp; Cameras" data-bg-style="full">
+          <div class="card-title-bar"><span class="card-title-label">Creating Reports</span></div>
+        </article><!-- Category: Wbfleet Video & Cameras --><article class="card is-pdf" data-type="pdf" data-title="CAM Pro &amp; CAM Lite Dash Cameras" data-category="Wbfleet Video &amp; Cameras" data-bg-style="full" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/CAM-Pro-Lite.pdf">
   <div class="poster" style="background-image: url('images/img_020.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
   
 
-          <div class="card-title-bar"><span class="card-title-label">CAM Pro &amp; Lite</span></div>
+          <div class="card-title-bar"><span class="card-title-label">CAM Pro &amp; CAM Lite Dash Cameras</span></div>
         </article><article class="card is-playable" data-vimeo-id="1173730565" data-title="AI-powered" data-category="Wbfleet Video &amp; Cameras" data-bg-style="full">
           <div class="poster" style="background-image: url('images/img_021.jpg'), url('images/img_004.png'); background-size: cover, cover; background-position: center, center;">
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
@@ -574,7 +575,7 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
           <div class="card-title-bar"><span class="card-title-label">Cold Chain</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="Cold Chain" data-category="Webfleet Cold Chain" data-bg-style="full">
+        </article><article class="card is-pdf" data-type="pdf" data-title="Cold Chain" data-category="Webfleet Cold Chain" data-bg-style="full" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/Cold-Chain.pdf">
   <div class="poster" style="background-image: url('images/img_024.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
@@ -586,49 +587,49 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
           <div class="card-title-bar"><span class="card-title-label">Connected Car</span></div>
-        </article><!-- Category: Webfleet Device Hardware --><article class="card is-pdf" data-type="pdf" data-title="LCS 100" data-category="Webfleet Device Hardware" data-bg-style="grey">
+        </article><!-- Category: Webfleet Device Hardware --><article class="card is-pdf" data-type="pdf" data-title="LCS 100" data-category="Webfleet Device Hardware" data-bg-style="grey" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/LCS-100.pdf">
   <div class="poster" style="background-image: url('images/img_026.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
   
 
           <div class="card-title-bar"><span class="card-title-label">LCS 100</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="Link 740" data-category="Webfleet Device Hardware" data-bg-style="grey">
+        </article><article class="card is-pdf" data-type="pdf" data-title="Link 740" data-category="Webfleet Device Hardware" data-bg-style="grey" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/Link-740.pdf">
   <div class="poster" style="background-image: url('images/img_027.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
   
 
           <div class="card-title-bar"><span class="card-title-label">Link 740</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="Link 245" data-category="Webfleet Device Hardware" data-bg-style="grey">
+        </article><article class="card is-pdf" data-type="pdf" data-title="Link 245" data-category="Webfleet Device Hardware" data-bg-style="grey" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/Link-245.pdf">
   <div class="poster" style="background-image: url('images/img_028.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
   
 
           <div class="card-title-bar"><span class="card-title-label">Link 245</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="Link 340" data-category="Webfleet Device Hardware" data-bg-style="grey">
+        </article><article class="card is-pdf" data-type="pdf" data-title="Link 340" data-category="Webfleet Device Hardware" data-bg-style="grey" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/Link-340.pdf">
   <div class="poster" style="background-image: url('images/img_029.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
   
 
           <div class="card-title-bar"><span class="card-title-label">Link 340</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="PRO i" data-category="Webfleet Device Hardware" data-bg-style="grey">
+        </article><article class="card is-pdf" data-type="pdf" data-title="PRO i" data-category="Webfleet Device Hardware" data-bg-style="grey" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/PRO-i.pdf">
   <div class="poster" style="background-image: url('images/img_030.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
   
 
           <div class="card-title-bar"><span class="card-title-label">PRO i</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="PRO M" data-category="Webfleet Device Hardware" data-bg-style="grey">
+        </article><article class="card is-pdf" data-type="pdf" data-title="PRO M" data-category="Webfleet Device Hardware" data-bg-style="grey" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/PRO-M.pdf">
   <div class="poster" style="background-image: url('images/img_031.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
   
 
           <div class="card-title-bar"><span class="card-title-label">PRO M</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="PRO X" data-category="Webfleet Device Hardware" data-bg-style="full">
+        </article><article class="card is-pdf" data-type="pdf" data-title="PRO X" data-category="Webfleet Device Hardware" data-bg-style="full" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/PRO-X.pdf">
   <div class="poster" style="background-image: url('images/img_032.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
@@ -640,7 +641,7 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
           <div class="card-title-bar"><span class="card-title-label">Optidrive 360</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="Fleet Advisor Ai" data-category="Webfleet Driver Safety Dashboard" data-bg-style="full">
+        </article><article class="card is-pdf" data-type="pdf" data-title="Fleet Advisor Ai" data-category="Webfleet Driver Safety Dashboard" data-bg-style="full" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/Fleet-Advisor-Ai.pdf">
   <div class="poster" style="background-image: url('images/img_033.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
@@ -652,7 +653,7 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
           <div class="card-title-bar"><span class="card-title-label">AI  Advisor</span></div>
-        </article><!-- Category: Webfleet Driver Terminals --><article class="card is-pdf" data-type="pdf" data-title="PRO i" data-category="Webfleet Driver Terminals" data-bg-style="full">
+        </article><!-- Category: Webfleet Driver Terminals --><article class="card is-pdf" data-type="pdf" data-title="PRO i" data-category="Webfleet Driver Terminals" data-bg-style="full" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/PRO-i.pdf">
   <div class="poster" style="background-image: url('images/img_003.png'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
@@ -699,21 +700,21 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
           <div class="card-title-bar"><span class="card-title-label">Digital Fleet Management</span></div>
-        </article><!-- Category: Webfleet Mobile Apps --><article class="card is-pdf" data-type="pdf" data-title="Webfleet Mobile" data-category="Webfleet Mobile Apps" data-bg-style="full">
+        </article><!-- Category: Webfleet Mobile Apps --><article class="card is-pdf" data-type="pdf" data-title="Webfleet Mobile" data-category="Webfleet Mobile Apps" data-bg-style="full" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/Webfleet-Mobile.pdf">
   <div class="poster" style="background-image: url('images/img_040.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
   
 
           <div class="card-title-bar"><span class="card-title-label">Webfleet Mobile</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="Vehicle Check" data-category="Webfleet Mobile Apps" data-bg-style="full">
+        </article><article class="card is-pdf" data-type="pdf" data-title="Vehicle Check" data-category="Webfleet Mobile Apps" data-bg-style="full" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/Vehicle-Check.pdf">
   <div class="poster" style="background-image: url('images/img_041.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
   
 
           <div class="card-title-bar"><span class="card-title-label">Vehicle Check</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="TPMS" data-category="Webfleet Mobile Apps" data-bg-style="full">
+        </article><article class="card is-pdf" data-type="pdf" data-title="TPMS" data-category="Webfleet Mobile Apps" data-bg-style="full" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/TPMS.pdf">
   <div class="poster" style="background-image: url('images/img_038.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
@@ -725,7 +726,7 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
           <div class="card-title-bar"><span class="card-title-label">logbook</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="License Check" data-category="Webfleet Mobile Apps" data-bg-style="full">
+        </article><article class="card is-pdf" data-type="pdf" data-title="License Check" data-category="Webfleet Mobile Apps" data-bg-style="full" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/License-Check.pdf">
   <div class="poster" style="background-image: url('images/img_043.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
@@ -772,7 +773,7 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
         
           <div class="card-title-bar"><span class="card-title-label">Advanced</span></div>
-        </article><article class="card is-pdf" data-type="pdf" data-title="CO 2" data-category="Webfleet Reporting Module" data-bg-style="full">
+        </article><article class="card is-pdf" data-type="pdf" data-title="CO 2" data-category="Webfleet Reporting Module" data-bg-style="full" data-pdf="https://raw.githubusercontent.com/Kikorangee/w/main/Product-Kits/CO2.pdf">
   <div class="poster" style="background-image: url('images/img_047.jpg'), url('images/img_004.png'); background-color: #1e3a5f; background-size: cover, cover; background-position: center, center;">
     <span class="pdf-badge">PDF</span>
           <div class="play-overlay" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.45)"></circle><polygon points="24,18 46,30 24,42" fill="white"></polygon></svg></div></div>
@@ -858,44 +859,71 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
     </div>
   </div>
 
-  <button class="tooltip-fab" id="tooltipFab" type="button" aria-pressed="false" title="Edit tooltip text for any card">
+  <button class="tooltip-fab" id="tooltipFab" type="button" aria-pressed="false" title="Edit cards">
     <span class="tooltip-fab-dot"></span>
-    <span class="tooltip-fab-text">Customize tooltips</span>
+    <span class="tooltip-fab-text">✏️ Edit Cards</span>
   </button>
 
   <div class="modal" id="tooltipModal">
     <div class="modal-backdrop" data-tooltip-close="true"></div>
-    <div class="modal-dialog tooltip-editor">
+    <div class="modal-dialog tooltip-editor" style="max-width:560px;">
       <button class="modal-close" data-tooltip-close="true">×</button>
       <div class="tooltip-editor-shell">
         <div>
-          <div class="tooltip-editor-eyebrow">Tooltip editor</div>
+          <div class="tooltip-editor-eyebrow">Card Editor</div>
           <div class="tooltip-editor-title" id="tooltipModalTitle">Card title</div>
           <div class="tooltip-editor-meta" id="tooltipModalMeta">Category</div>
         </div>
-        <div>
-          <label for="tooltipText">Tooltip text</label>
-          <textarea id="tooltipText" spellcheck="true" placeholder="Write the text shown below the card title on hover."></textarea>
+
+        <div style="display:grid;gap:12px;">
+          <div>
+            <label for="editTitle">Title</label>
+            <input id="editTitle" type="text" spellcheck="true" placeholder="Card title" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,0.03);color:#fff;font:inherit;font-size:13px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;">
+          </div>
+          <div>
+            <label for="editImage">Thumbnail image URL</label>
+            <input id="editImage" type="text" placeholder="https://... or leave blank to keep current" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,0.03);color:#fff;font:inherit;font-size:13px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;">
+            <div style="margin-top:6px;font-size:11px;color:var(--muted);">Current: <span id="editImageCurrent" style="color:#94a3b8;word-break:break-all;"></span></div>
+          </div>
+          <div>
+            <label for="tooltipText">Tooltip description</label>
+            <textarea id="tooltipText" spellcheck="true" placeholder="Text shown on hover." style="min-height:100px;"></textarea>
+          </div>
         </div>
+
         <div class="tooltip-editor-actions">
           <button type="button" class="secondary" id="tooltipResetBtn">Reset</button>
           <button type="button" class="secondary" id="tooltipCancelBtn">Cancel</button>
           <button type="button" class="primary" id="tooltipSaveBtn">Save</button>
         </div>
-        <div class="tooltip-editor-note">Saved locally in this browser only.</div>
+        <div class="tooltip-editor-note">Changes are saved in this browser. Use the Export button (bottom-right) to download updated HTML.</div>
       </div>
     </div>
   </div>
 
+  <!-- Export button (shown only in edit mode) -->
+  <button id="exportBtn" style="display:none;position:fixed;right:24px;bottom:80px;z-index:350;padding:10px 16px;border-radius:999px;border:1px solid rgba(56,189,248,0.4);background:rgba(56,189,248,0.14);color:#fff;font:700 12px/1 inherit;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.3);">
+    ⬇ Export HTML
+  </button>
+
   <script>
     // ── Modal ──────────────────────────────────────────────
     var modal=document.getElementById('videoModal'),iframe=document.getElementById('vimeoPlayer'),tooltipModal=document.getElementById('tooltipModal'),tooltipFab=document.getElementById('tooltipFab'),tooltipModalTitle=document.getElementById('tooltipModalTitle'),tooltipModalMeta=document.getElementById('tooltipModalMeta'),tooltipTextarea=document.getElementById('tooltipText'),tooltipSaveBtn=document.getElementById('tooltipSaveBtn'),tooltipResetBtn=document.getElementById('tooltipResetBtn'),tooltipCancelBtn=document.getElementById('tooltipCancelBtn');
+    var editTitleInput=document.getElementById('editTitle'),editImageInput=document.getElementById('editImage'),editImageCurrent=document.getElementById('editImageCurrent');
+    var exportBtn=document.getElementById('exportBtn');
     var tooltipEditMode=false,activeTooltipCard=null;
     document.querySelectorAll('[data-close="true"]').forEach(function(b){b.addEventListener('click',closeModal)});
     document.querySelectorAll('[data-tooltip-close="true"]').forEach(function(b){b.addEventListener('click',closeTooltipEditor)});
     function openModal(id){if(!id)return;iframe.src='https://player.vimeo.com/video/'+id+'?autoplay=1&badge=0&byline=0&portrait=0&title=0';modal.classList.add('is-open');document.body.style.overflow='hidden';}
     function closeModal(){iframe.src='';modal.classList.remove('is-open');document.body.style.overflow='';}
     document.addEventListener('keydown',function(e){if(e.key!=='Escape')return;if(tooltipModal&&tooltipModal.classList.contains('is-open')){closeTooltipEditor();return;}if(modal.classList.contains('is-open'))closeModal();else if(tooltipEditMode)setTooltipEditMode(false);});
+
+    // Export button
+    exportBtn.addEventListener('click',function(){
+      var html=document.documentElement.outerHTML;
+      var blob=new Blob([html],{type:'text/html'});
+      var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='index.html';a.click();
+    });
 
     // ── Hero Carousel ──────────────────────────────────────
     (function(){
@@ -965,12 +993,23 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
       var category=card.dataset.category||'Uncategorized';
       var type=card.classList.contains('is-pdf')?'PDF':'Video';
       var text=resolveTooltipText(card)||getFallbackTooltip(card);
+
+      // Populate title field
+      editTitleInput.value=title;
+
+      // Populate image field — get current background-image from poster
+      var poster=card.querySelector('.poster');
+      var currentBg=poster?poster.style.backgroundImage:'';
+      var currentUrl=currentBg.replace(/^url\(['"]?/,'').replace(/['"]?\).*$/,'').split(',')[0].trim();
+      editImageCurrent.textContent=currentUrl||'(embedded/none)';
+      editImageInput.value='';
+
       tooltipModalTitle.textContent=title;
       tooltipModalMeta.textContent=category+' | '+type;
       tooltipTextarea.value=text;
       tooltipModal.classList.add('is-open');
       document.body.style.overflow='hidden';
-      setTimeout(function(){tooltipTextarea.focus();tooltipTextarea.select();},0);
+      setTimeout(function(){editTitleInput.focus();editTitleInput.select();},0);
     }
     function closeTooltipEditor(){
       if(!tooltipModal)return;
@@ -979,19 +1018,45 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
       document.body.style.overflow='';
     }
     function saveTooltipEditor(){
-      if(!activeTooltipCard||!tooltipTextarea)return;
+      if(!activeTooltipCard)return;
       var key=getCardKey(activeTooltipCard);
+
+      // Save tooltip
       var text=tooltipTextarea.value.trim();
       if(text){tooltipStore[key]=text;}else{delete tooltipStore[key];}
       persistTooltipStore();
       syncTooltipCard(activeTooltipCard);
+
+      // Save title
+      var newTitle=editTitleInput.value.trim();
+      if(newTitle){
+        activeTooltipCard.dataset.title=newTitle;
+        var label=activeTooltipCard.querySelector('.card-title-label');
+        if(label) label.textContent=newTitle;
+        tooltipModalTitle.textContent=newTitle;
+      }
+
+      // Save image URL
+      var newImg=editImageInput.value.trim();
+      if(newImg){
+        var poster=activeTooltipCard.querySelector('.poster');
+        if(poster){
+          var existing=poster.style.backgroundImage;
+          // Replace first URL only, keep fallbacks
+          var parts=existing.split(',');
+          parts[0]='url("'+newImg+'")';
+          poster.style.backgroundImage=parts.join(',');
+        }
+      }
+
       closeTooltipEditor();
     }
     function resetTooltipEditor(){
-      if(!activeTooltipCard||!tooltipTextarea)return;
+      if(!activeTooltipCard)return;
+      editTitleInput.value=activeTooltipCard.dataset.title||'';
+      editImageInput.value='';
       tooltipTextarea.value=getGeneratedTooltip(activeTooltipCard)||getFallbackTooltip(activeTooltipCard);
-      tooltipTextarea.focus();
-      tooltipTextarea.select();
+      editTitleInput.focus();
     }
     function setTooltipEditMode(on){
       tooltipEditMode=typeof on==='boolean'?on:!tooltipEditMode;
@@ -1000,8 +1065,9 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
         tooltipFab.classList.toggle('is-active',tooltipEditMode);
         tooltipFab.setAttribute('aria-pressed',tooltipEditMode?'true':'false');
         var label=tooltipFab.querySelector('.tooltip-fab-text');
-        if(label) label.textContent=tooltipEditMode?'Editing tooltips':'Customize tooltips';
+        if(label) label.textContent=tooltipEditMode?'✏️ Editing — click a card':'✏️ Edit Cards';
       }
+      exportBtn.style.display=tooltipEditMode?'block':'none';
       if(!tooltipEditMode&&tooltipModal&&tooltipModal.classList.contains('is-open')) closeTooltipEditor();
     }
     if(tooltipFab) tooltipFab.addEventListener('click',function(){setTooltipEditMode();});
@@ -1015,7 +1081,7 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
       var k=descKey(t,c),d=custom||descCache[k]||'';
       var s=card.dataset.subcategory||'';
       var panel=document.createElement('div');panel.className='card-expand';
-      panel.innerHTML='<p class="card-desc-text '+(d?'':'loading')+'">'+escapeHtml(d||'Loading...')+'</p><div class="card-meta"><span class="card-cat-tag">'+escapeHtml(c)+'</span>'+(s?'<span class="card-subcat-tag">'+escapeHtml(s)+'</span>':'')+(isPdf?'<span class="card-type-tag">PDF</span>':'<span class="card-type-tag">Video</span>')+'</div>';
+      panel.innerHTML='<p class="card-desc-text '+(d?'':'loading')+'">'+escapeHtml(d||'Loading...')+'</p>';
       (card.querySelector('.poster')||card).appendChild(panel);
       if(custom){panel.querySelector('.card-desc-text').classList.add('custom');}
       if(!d&&!descCache.hasOwnProperty(k)){descQ.push({title:t,category:c,key:k,el:panel.querySelector('.card-desc-text')});processQ();}
@@ -1132,6 +1198,7 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
         c.addEventListener('click',function(e){
           if(e.target.closest('.action,.card-expand'))return;
           if(tooltipEditMode){e.preventDefault();e.stopPropagation();openTooltipEditor(c);return;}
+          if(c.classList.contains('is-pdf')){var pdfUrl=c.dataset.pdf;if(pdfUrl)window.open(pdfUrl,'_blank');return;}
           if(!c.classList.contains('is-playable'))return;
           var id=c.dataset.vimeoId;if(id)openModal(id);
         });
@@ -1180,10 +1247,15 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
     if(sbo)sbo.addEventListener('click',closeSB);
     document.addEventListener('click',function(e){if(e.target.closest('.sidebar a')&&window.innerWidth<=768)closeSB();});
 
+    // ── Logo rotator disabled (video plays automatically) ──
+    // Video src set to external file - host logo.mp4 alongside index.html
+
     // ── Init ───────────────────────────────────────────────
     window.addEventListener('load',function(){setTimeout(reorganize,100);});
   </script>
 
 
 
+
+<script>try{localStorage.setItem('training-hub-tooltip-overrides-v1',"{\"pdf::::pro m::webfleet device hardware\":\"Learn about pro m in Webfleet fleet management.\",\"video::1173729958::transition tool::ev & sustainability\":\"Analyse your existing fleet and transition to EV using the latest industry data\",\"video::1173729513::configuration::setup & configuration\":\"Learn how to configure the various Webfleet devices installed in your vehicles\",\"video::1173729339::understanding co2 emissions::ev & sustainability\":\"Learn how to track co2 emmissions by vehicle in your fleet and build automated reports\",\"video::1173729624::monitoring efficient driving::ev & sustainability\":\"Understanding and measuring safe driving techniques and reducin g the cost of ownership of your fleet\",\"video::1173729596::optimising your fleet::ev & sustainability\":\"Optimising your fleet using historical and real-time data in Webfleet\",\"video::1173729943::fuel management::ev & sustainability\":\"Reduce cost and drive smarter using real-time fuel tracking\",\"video::1173729958::ev transition tool::ev & sustainability\":\"Make faster and data assisted decisions about electrifying your fleet\",\"video::1173729259::users::setup & configuration\":\"Create Webfleet users and assign appropriate permissions, access rights, and user profiles based on each individual’s role within the business.\",\"video::1173730206::admin::setup & configuration\":\"Manage your contracts, features and account details in Webfleet\",\"video::1173730314::vehicles::setup & configuration\":\"Learn how to effectively track your light and Heavy vehicles\",\"video::1173729315::equipment::setup & configuration\":\"Learn how to effectively track your equipment, diggers, trailers and other valuable assets\",\"video::1173729440::areas::setup & configuration\":\"Learn how to setup Geofences in Webfleet and monitor and set notifications on activity within these areas\",\"video::1173730244::speed::setup & configuration\":\"Manage speed thresholds and settings in Webfleet and control Driver Safety\",\"video::1173730015::notifications::setup & configuration\":\"Customise alerts on events in Webfleet that when triggered notify internal and external parties\",\"video::1173730286::dashboard::setup & configuration\":\"Define, optimise and manage your fleet using performance indicators in the Webfleet Dashboard\",\"video::1173729898::optidrive 360::setup & configuration\":\"Webfleets all-in-one solution to manage and measure safe and effective driving\",\"video::1173730236::maintenance basic::setup & configuration\":\"Configure maintenance service plans to assets and vehicles to maintain the health of your fleet\",\"video::1173730225::maintenance advanced::setup & configuration\":\"Managing and Monitoring Service Plans in your Fleet\",\"video::1173729464::reports::setup & configuration\":\"Learn how to create, configure and edit reports in Webfleet\",\"pdf::::cam pro & lite::wbfleet video & cameras\":\"Detailed information on the design, features and functionality of Webfleets Dashcam hardware - Datasheet\"}")}catch(e){}</script>
 </body></html>
