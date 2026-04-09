@@ -1125,10 +1125,40 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
       var cats={};
       cards.forEach(function(c){var t=c.dataset.title||'',cat=c.dataset.category||getVideoCategory(t);c.dataset.category=cat;if(!cats[cat])cats[cat]=[];cats[cat].push(c);});
       // Move EV & Sustainability to the bottom
-	  var sorted = Object.keys(cats).sort(function(a, b) {
-      if (a === "EV & Sustainability") return 1;
-      if (b === "EV & Sustainability") return -1;
-      return a.localeCompare(b);
+	 // Custom order for sections
+var customOrder = [
+    "Setup & Configuration",
+    "Webfleet Reporting Module",
+    "Webfleet Driver Safety Dashboard",
+    "Webfleet Driver Terminals",
+    "Webfleet Device Hardware",
+    "Webfleet Mobile Apps",
+    "Workflow Management",
+    "Webfleet Insights",
+    "Wbfleet Video & Cameras",
+    "Webfleet Cold Chain",
+    "Webfleet Connected Car Platform",
+    "EV & Sustainability"
+];
+
+var sorted = Object.keys(cats).sort(function(a, b) {
+    var indexA = customOrder.indexOf(a);
+    var indexB = customOrder.indexOf(b);
+    
+    // Both in custom order
+    if (indexA !== -1 && indexB !== -1) {
+        return indexA - indexB;
+    }
+    // Only A in custom order (A comes first)
+    if (indexA !== -1) {
+        return -1;
+    }
+    // Only B in custom order (B comes first)
+    if (indexB !== -1) {
+        return 1;
+    }
+    // Neither in custom order - alphabetically
+    return a.localeCompare(b);
 });
       var main=document.querySelector('.main-inner');
       main.querySelectorAll('.section').forEach(function(s){s.remove();});
