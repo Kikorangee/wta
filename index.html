@@ -9,7 +9,6 @@
 :root { --bg:#0d0d10; --panel:rgba(18,18,22,0.92); --line:rgba(148,163,184,0.1); --text:#e2e8f0; --muted:#8892a4; --accent:#38bdf8; --accent2:#818cf8; --red:#ef4444; --sidebar-bg:#4d5b67; --card-gap:8px; --card-w:180px; }
 * { box-sizing:border-box; margin:0; padding:0; }
 body { font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
-lcs 100
 /* Animated gradient mesh bg */
 body::before { content:''; position:fixed; inset:0; z-index:-1; background:
   radial-gradient(ellipse 80% 60% at 15% 50%, rgba(56,189,248,0.04) 0%, transparent 60%),
@@ -60,7 +59,7 @@ body.sb-collapsed .main { margin-left:76px; width:calc(100% - 76px); }
 .main-inner { padding:24px 32px 60px; }
 @media (max-width:768px) { .main-inner { padding:16px; } }
 
-h1 { font-size:25px; font-weight:700; letter-spacing:-0.02em; width:100%; text-align:justify; }h1 { font-size:45px; font-weight:950; letter-spacing:-0.02em; }
+h1 { font-size:25px; font-weight:700; letter-spacing:-0.02em; width:100%; text-align:justify; 
 .intro { color:var(--muted); max-width:840px; line-height:1.55; font-size:20px; margin-bottom:4px; }
 
 /* ── HERO BANNER ─────────────────────────────────────────── */
@@ -69,7 +68,7 @@ h1 { font-size:25px; font-weight:700; letter-spacing:-0.02em; width:100%; text-a
 .hero-slide.active { opacity:1; }
 .hero-gradient { position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,16,0.1) 0%, rgba(13,13,16,0.6) 50%, var(--bg) 100%); }
 .hero-content { position:absolute; bottom:40px; left:40px; right:40px; z-index:2; }
-.hero-eyebrow { font-size:30px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:8px; }
+.hero-eyebrow { font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:8px; }
 .hero-title { font-size:45px; font-weight:700; letter-spacing:-0.02em; line-height:1.1; margin-bottom:8px; }
 .hero-desc { font-size:24px; color:var(--muted); max-width:1000px; line-height:1.5; margin-bottom:16px; }
 .hero-btn { display:inline-flex; align-items:center; gap:8px; padding:10px 24px; border-radius:10px; background:var(--accent); color:#000; font-weight:700; font-size:14px; border:none; cursor:pointer; transition:all 0.2s; text-decoration:none; }
