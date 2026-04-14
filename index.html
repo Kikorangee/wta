@@ -423,10 +423,7 @@ h1 { font-size:28px; font-weight:700; letter-spacing:-0.02em; }
       var category=(card.dataset.category||'').trim().toLowerCase();
       return [type,id,title,category].join('::');
     }
-    function getFallbackTooltip(card){
-      var title=(card.dataset.title||'this item').trim().toLowerCase();
-      return'Learn about '+title+' in Webfleet fleet management.';
-    }
+   
     function getGeneratedTooltip(card){
       var t=card.dataset.title||'',c=card.dataset.category||'';
       return descCache[descKey(t,c)]||'';
